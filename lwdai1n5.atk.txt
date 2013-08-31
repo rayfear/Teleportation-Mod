@@ -1,0 +1,81 @@
+﻿Uploaded to GitHub
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+# On branch master
+# Changes to be committed:
+#   (use "git reset HEAD <file>..." to unstage)
+#
+#	new file:   assets/tpmod/textures/3D/Thumbs.db
+#	new file:   assets/tpmod/textures/3D/Wand.png
+#	new file:   assets/tpmod/textures/3D/Wand2.png
+#	new file:   assets/tpmod/textures/3D/Wand3.png
+#	new file:   assets/tpmod/textures/armor/Thumbs.db
+#	new file:   assets/tpmod/textures/armor/blueWings.png
+#	new file:   assets/tpmod/textures/armor/greenWings.png
+#	new file:   assets/tpmod/textures/armor/orangeWings.png
+#	new file:   assets/tpmod/textures/armor/pinkWings.png
+#	new file:   assets/tpmod/textures/armor/redWings.png
+#	new file:   assets/tpmod/textures/armor/wings.png
+#	new file:   assets/tpmod/textures/armor/yellowWings.png
+#	new file:   assets/tpmod/textures/blocks/Teleport_Dirt.png
+#	new file:   assets/tpmod/textures/blocks/Teleport_Grass_Side.png
+#	new file:   assets/tpmod/textures/blocks/Teleport_Grass_Top.png
+#	new file:   assets/tpmod/textures/blocks/Teleport_Ore.png
+#	new file:   assets/tpmod/textures/blocks/Thumbs.db
+#	new file:   assets/tpmod/textures/blocks/Tp_Block.png
+#	new file:   assets/tpmod/textures/blocks/Tp_Portal.png
+#	new file:   assets/tpmod/textures/items/Flint_And_Diamond.png
+#	new file:   assets/tpmod/textures/items/Items.png
+#	new file:   assets/tpmod/textures/items/Looking_Vec_Wand.png
+#	new file:   assets/tpmod/textures/items/Obsidian_Sticks.png
+#	new file:   assets/tpmod/textures/items/Portal_Top.png
+#	new file:   assets/tpmod/textures/items/Portal_Wand.png
+#	new file:   assets/tpmod/textures/items/Teleport_Ball.png
+#	new file:   assets/tpmod/textures/items/Teleport_Shards.png
+#	new file:   assets/tpmod/textures/items/Teleportation_Wand.png
+#	new file:   assets/tpmod/textures/items/Thumbs.db
+#	new file:   assets/tpmod/textures/items/Watching_Eye.png
+#	new file:   assets/tpmod/textures/mob/TeleportationMob.png
+#	new file:   assets/tpmod/textures/mob/Thumbs.db
+#	new file:   com/ClientProxyTp.java
+#	new file:   com/CommonProxyTp.java
+#	new file:   com/Item/ItemFlintAndDiamond.java
+#	new file:   com/Item/ItemLookWand.java
+#	new file:   com/Item/ItemLookingEye.java
+#	new file:   com/Item/ItemMiniPortal.java
+#	new file:   com/Item/ItemObsidianStick.java
+#	new file:   com/Item/ItemTeleportationBall.java
+#	new file:   com/Item/ItemTeleportationShards.java
+#	new file:   com/Item/ItemTeleporter.java
+#	new file:   com/Item/ItemTeleportingWand.java
+#	new file:   com/PortalPositionClient.java
+#	new file:   com/PortalPositionTp.java
+#	new file:   com/SavedLocation.java
+#	new file:   com/Teleportation Mod Source.zip
+#	new file:   com/TeleporterClient.java
+#	new file:   com/TeleporterMod.java
+#	new file:   com/TeleporterTp.java
+#	new file:   com/ThreeDee/RenderWand.java
+#	new file:   com/ThreeDee/RenderWand2.java
+#	new file:   com/ThreeDee/RenderWand3.java
+#	new file:   com/block/BlockTeleportingDirt.java
+#	new file:   com/block/BlockTeleportingGrass.java
+#	new file:   com/block/BlockTeleportingOre.java
+#	new file:   com/block/BlockTpBlock.java
+#	new file:   com/block/BlockTpFire.java
+#	new file:   com/block/BlockTpPortal.java
+#	new file:   com/entity/EntityTeleportationMob.java
+#	new file:   com/entity/RenderTpMob.java
+#	new file:   com/model/ModelTeleportationMob.java
+#	new file:   com/model/ModelWand.java
+#	new file:   com/model/ModelWand2.java
+#	new file:   com/tab/TabTeleportation.java
+#	new file:   com/world/BiomeGenTeleport.java
+#	new file:   com/world/ChunkProviderTp.java
+#	new file:   com/world/OreWorldGenerator.java
+#	new file:   com/world/WorldChunkManagerTp.java
+#	new file:   com/world/WorldGenMinableNether.java
+#	new file:   com/world/WorldGenTeleportTrees.java
+#	new file:   com/world/WorldProviderTp.java
+#
+

@@ -1,0 +1,116 @@
+package com.ThreeDee;
+
+import org.lwjgl.Sys;
+import org.lwjgl.opengl.GL11;
+
+import com.model.ModelWand;
+import com.model.ModelWand2;
+
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.inventory.GuiContainerCreative;
+import net.minecraft.client.gui.inventory.GuiInventory;
+import net.minecraft.client.renderer.RenderBlocks;
+import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.client.ForgeHooksClient;
+import net.minecraftforge.client.IItemRenderer;
+import net.minecraftforge.client.IItemRenderer.ItemRenderType;
+
+public class RenderWand implements IItemRenderer 
+{
+	protected ModelWand model = new ModelWand();
+	private static final ResourceLocation png = new ResourceLocation("tpmod:textures/3D/Wand.png");
+	public boolean handleRenderType(ItemStack stack, IItemRenderer.ItemRenderType type)
+	{
+		switch(type)
+		{
+		case EQUIPPED: return true;
+		case EQUIPPED_FIRST_PERSON: return true;
+		case INVENTORY: return true;
+		case ENTITY: return true;
+		default: return false;
+		}
+
+	}
+
+	public boolean shouldUseRenderHelper(IItemRenderer.ItemRenderType var1, ItemStack var2, IItemRenderer.ItemRendererHelper var3)
+	{
+		return true;
+	}
+
+	public void renderWand(ItemRenderType type)
+	{
+		GL11.glPushMatrix();
+		Minecraft.getMinecraft().renderEngine.func_110577_a(png);
+		
+		if(type == ItemRenderType.EQUIPPED)
+		{
+			float scale = 6F;
+			GL11.glScalef(scale, scale, scale);
+			GL11.glRotatef(180, 0, 1, 0);
+			GL11.glRotatef(75, 1, 0, 0);
+			GL11.glRotatef(90, 1, 0, 0);
+			GL11.glRotatef(-25, 0, 1, 0);
+		}
+
+		else if(type == ItemRenderType.EQUIPPED_FIRST_PERSON)
+		{
+			float scale = 5F;
+			GL11.glScalef(scale, scale, scale);
+			GL11.glRotatef(160, 0, 1, 0);
+			GL11.glRotatef(75, 1, 0, 0);
+			GL11.glRotatef(40, 2.5F, 0, 0);
+			GL11.glRotatef(40, 2.5F, 0, 0);
+			GL11.glTranslatef(-0.2F, 0.1F, -0.1F);
+		}
+		else if (type == ItemRenderType.INVENTORY)
+		{
+			float scale = 2F;
+			GL11.glScalef(scale, scale, scale);
+			GL11.glRotatef(Sys.getTime() / 50F % 360F, 0F, 1F, 0F);
+		}
+		else if (type == ItemRenderType.ENTITY)
+		{
+			GL11.glTranslatef(0.0F, 0.0F, 0F);
+			GL11.glScalef(2.0F, 2.0F, 2.0F);
+			GL11.glRotatef(Sys.getTime() / 40F % 360F, 0F, 1F, 0F);
+		}
+
+		model.renderAll();
+
+		GL11.glPopMatrix();
+		//GL11.glRotatef(angle, x, y, z);
+
+	}
+	public void renderItem(IItemRenderer.ItemRenderType type, ItemStack var2, Object ... data)
+	{
+		switch(type)
+		{
+
+		case EQUIPPED:
+			this.renderWand(type);
+			break;
+		case INVENTORY:
+			this.renderWand(type);
+			break;
+		case EQUIPPED_FIRST_PERSON:
+			this.renderWand(type);
+			break;
+		case ENTITY:
+			this.renderWand(type);
+			break;
+		default:
+		}
+	}
+
+
+}
+
+
+
+
+
