@@ -2,12 +2,12 @@ package com.block;
 
 import java.util.Random;
 
-import com.TeleporterMod;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
+
+import com.Item.TeleportationItems;
 
 
 
@@ -40,6 +40,6 @@ public class BlockTeleportingOre extends Block
 	 */
 	public int idDropped(int par1, Random par2Random, int par3)
 	{
-		return TeleporterMod.TeleportationShards.itemID;
+		return TeleportationItems.TeleportationShards.itemID;
 	}
 }

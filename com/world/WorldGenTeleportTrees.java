@@ -2,13 +2,13 @@ package com.world;
 
 import java.util.Random;
 
-import com.TeleporterMod;
-
-
 import net.minecraft.block.Block;
 import net.minecraft.util.Direction;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenerator;
+
+import com.TeleporterMod;
+import com.block.TeleportationBlocks;
 
 public class WorldGenTeleportTrees extends WorldGenerator
 {
@@ -72,7 +72,7 @@ public class WorldGenTeleportTrees extends WorldGenerator
                         {
                             var12 = par1World.getBlockId(var10, var8, var11);
 
-                            if (var12 != 0 && var12 != Block.obsidian.blockID && var12 != TeleporterMod.TeleportingGrass.blockID && var12 != TeleporterMod.TeleportingGrass.blockID && var12 != Block.wood.blockID)
+                            if (var12 != 0 && var12 != Block.obsidian.blockID && var12 != TeleportationBlocks.TeleportingGrass.blockID && var12 != TeleportationBlocks.TeleportingGrass.blockID && var12 != Block.wood.blockID)
                             {
                                 var7 = false;
                             }
@@ -93,9 +93,9 @@ public class WorldGenTeleportTrees extends WorldGenerator
             {
                 var8 = par1World.getBlockId(par3, par4 - 1, par5);
 
-                if ((var8 == TeleporterMod.TeleportingGrass.blockID || var8 == TeleporterMod.TeleportingGrass.blockID) && par4 < 256 - var6 - 1)
+                if ((var8 == TeleportationBlocks.TeleportingGrass.blockID || var8 == TeleportationBlocks.TeleportingGrass.blockID) && par4 < 256 - var6 - 1)
                 {
-                    this.setBlock(par1World, par3, par4 - 1, par5, TeleporterMod.TeleportingGrass.blockID);
+                    this.setBlock(par1World, par3, par4 - 1, par5, TeleportationBlocks.TeleportingGrass.blockID);
                     var9 = 3;
                     byte var18 = 0;
                     int var13;

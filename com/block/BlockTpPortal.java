@@ -1,23 +1,22 @@
 
 package com.block;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import java.util.Random;
 
-import com.TeleporterMod;
-import com.TeleporterTp;
-
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockBreakable;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.item.ItemMonsterPlacer;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+
+import com.TeleporterTp;
+import com.world.TeleportationDimensions;
+
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockTpPortal extends BlockBreakable
 {
@@ -97,12 +96,12 @@ public class BlockTpPortal extends BlockBreakable
         byte b0 = 0;
         byte b1 = 0;
 
-        if (par1World.getBlockId(par2 - 1, par3, par4) == TeleporterMod.TpBlock.blockID || par1World.getBlockId(par2 + 1, par3, par4) == TeleporterMod.TpBlock.blockID)
+        if (par1World.getBlockId(par2 - 1, par3, par4) == TeleportationBlocks.TpBlock.blockID || par1World.getBlockId(par2 + 1, par3, par4) == TeleportationBlocks.TpBlock.blockID)
         {
             b0 = 1;
         }
 
-        if (par1World.getBlockId(par2, par3, par4 - 1) == TeleporterMod.TpBlock.blockID || par1World.getBlockId(par2, par3, par4 + 1) == TeleporterMod.TpBlock.blockID)
+        if (par1World.getBlockId(par2, par3, par4 - 1) == TeleportationBlocks.TpBlock.blockID || par1World.getBlockId(par2, par3, par4 + 1) == TeleportationBlocks.TpBlock.blockID)
         {
             b1 = 1;
         }
@@ -134,12 +133,12 @@ public class BlockTpPortal extends BlockBreakable
 
                         if (flag)
                         {
-                            if (j1 != TeleporterMod.TpBlock.blockID)
+                            if (j1 != TeleportationBlocks.TpBlock.blockID)
                             {
                                 return false;
                             }
                         }
-                        else if (j1 != 0 && j1 != TeleporterMod.FireBlock.blockID)
+                        else if (j1 != 0 && j1 != TeleportationBlocks.FireBlock.blockID)
                         {
                             return false;
                         }
@@ -181,7 +180,7 @@ public class BlockTpPortal extends BlockBreakable
             ;
         }
 
-        if (par1World.getBlockId(par2, i1 - 1, par4) != TeleporterMod.TpBlock.blockID)
+        if (par1World.getBlockId(par2, i1 - 1, par4) != TeleportationBlocks.TpBlock.blockID)
         {
             par1World.setBlockToAir(par2, par3, par4);
         }
@@ -194,7 +193,7 @@ public class BlockTpPortal extends BlockBreakable
                 ;
             }
 
-            if (j1 == 3 && par1World.getBlockId(par2, i1 + j1, par4) == TeleporterMod.TpBlock.blockID)
+            if (j1 == 3 && par1World.getBlockId(par2, i1 + j1, par4) == TeleportationBlocks.TpBlock.blockID)
             {
                 boolean flag = par1World.getBlockId(par2 - 1, par3, par4) == this.blockID || par1World.getBlockId(par2 + 1, par3, par4) == this.blockID;
                 boolean flag1 = par1World.getBlockId(par2, par3, par4 - 1) == this.blockID || par1World.getBlockId(par2, par3, par4 + 1) == this.blockID;
@@ -205,7 +204,7 @@ public class BlockTpPortal extends BlockBreakable
                 }
                 else
                 {
-                    if ((par1World.getBlockId(par2 + b0, par3, par4 + b1) != TeleporterMod.TpBlock.blockID || par1World.getBlockId(par2 - b0, par3, par4 - b1) != this.blockID) && (par1World.getBlockId(par2 - b0, par3, par4 - b1) != TeleporterMod.TpBlock.blockID || par1World.getBlockId(par2 + b0, par3, par4 + b1) != this.blockID))
+                    if ((par1World.getBlockId(par2 + b0, par3, par4 + b1) != TeleportationBlocks.TpBlock.blockID || par1World.getBlockId(par2 - b0, par3, par4 - b1) != this.blockID) && (par1World.getBlockId(par2 - b0, par3, par4 - b1) != TeleportationBlocks.TpBlock.blockID || par1World.getBlockId(par2 + b0, par3, par4 + b1) != this.blockID))
                     {
                         par1World.setBlockToAir(par2, par3, par4);
                     }
@@ -297,9 +296,10 @@ public class BlockTpPortal extends BlockBreakable
 			if (par5Entity instanceof EntityPlayerMP)
 			{
 				EntityPlayerMP thePlayer = (EntityPlayerMP) par5Entity;
-				if (par5Entity.dimension != TeleporterMod.dimension)
+				
+				if (par5Entity.dimension != TeleportationDimensions.dimension)
 				{
-					thePlayer.mcServer.getConfigurationManager().transferPlayerToDimension(thePlayer, TeleporterMod.dimension, new TeleporterTp(thePlayer.mcServer.worldServerForDimension(TeleporterMod.dimension)));
+					thePlayer.mcServer.getConfigurationManager().transferPlayerToDimension(thePlayer, TeleportationDimensions.dimension, new TeleporterTp(thePlayer.mcServer.worldServerForDimension(TeleportationDimensions.dimension)));
 				}
 				else
 				{

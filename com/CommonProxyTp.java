@@ -3,7 +3,7 @@ package com;
 public class CommonProxyTp
 {
 	
-    public void registerRenderThings()
+    public void register()
     {
 	     
     }

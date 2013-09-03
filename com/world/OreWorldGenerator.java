@@ -2,12 +2,11 @@ package com.world;
 
 import java.util.Random;
 
-import com.TeleporterMod;
-
-
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.gen.feature.WorldGenMinable;
+
+import com.block.TeleportationBlocks;
 
 import cpw.mods.fml.common.IWorldGenerator;
 
@@ -37,7 +36,7 @@ public class OreWorldGenerator implements IWorldGenerator
 			int randPosY = rand.nextInt(10);
 			int randPosZ = chunkZ + rand.nextInt(16);
 
-			(new WorldGenMinable(TeleporterMod.TeleportingOre.blockID, 4)).generate(world, rand, randPosX, randPosY, randPosZ);
+			(new WorldGenMinable(TeleportationBlocks.TeleportingOre.blockID, 4)).generate(world, rand, randPosX, randPosY, randPosZ);
 		}
 	}
 

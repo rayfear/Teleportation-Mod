@@ -2,12 +2,13 @@ package com.world;
 
 import java.util.Random;
 
-import com.TeleporterMod;
-
 import net.minecraft.entity.monster.EntityEnderman;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.biome.SpawnListEntry;
 import net.minecraft.world.gen.feature.WorldGenerator;
+
+import com.TeleporterMod;
+import com.block.TeleportationBlocks;
 
 
 public class BiomeGenTeleport extends BiomeGenBase
@@ -21,8 +22,8 @@ public class BiomeGenTeleport extends BiomeGenBase
         this.spawnableMonsterList.clear();
         this.spawnableWaterCreatureList.clear();
         this.theBiomeDecorator.treesPerChunk = 2;
-        this.fillerBlock = (byte)TeleporterMod.TeleportingDirt.blockID;
-        this.topBlock = (byte)TeleporterMod.TeleportingGrass.blockID;
+        this.fillerBlock = (byte)TeleportationBlocks.TeleportingDirt.blockID;
+        this.topBlock = (byte)TeleportationBlocks.TeleportingGrass.blockID;
         setColor(244);
         this.spawnableCreatureList.add(new SpawnListEntry(EntityEnderman.class, 800, 4, 8));
 

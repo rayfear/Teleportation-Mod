@@ -1,9 +1,13 @@
 package com.world;
 
+import static net.minecraftforge.event.terraingen.InitMapGenEvent.EventType.SCATTERED_FEATURE;
+import static net.minecraftforge.event.terraingen.PopulateChunkEvent.Populate.EventType.DUNGEON;
+import static net.minecraftforge.event.terraingen.PopulateChunkEvent.Populate.EventType.ICE;
+import static net.minecraftforge.event.terraingen.PopulateChunkEvent.Populate.EventType.LAKE;
+import static net.minecraftforge.event.terraingen.PopulateChunkEvent.Populate.EventType.LAVA;
+
 import java.util.List;
 import java.util.Random;
-
-import com.TeleporterMod;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockSand;
@@ -20,15 +24,13 @@ import net.minecraft.world.gen.NoiseGeneratorOctaves;
 import net.minecraft.world.gen.feature.MapGenScatteredFeature;
 import net.minecraft.world.gen.feature.WorldGenDungeons;
 import net.minecraft.world.gen.feature.WorldGenLakes;
-import net.minecraft.world.gen.structure.MapGenMineshaft;
-import net.minecraft.world.gen.structure.MapGenStronghold;
-import net.minecraft.world.gen.structure.MapGenVillage;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.Event.Result;
+import net.minecraftforge.event.terraingen.ChunkProviderEvent;
+import net.minecraftforge.event.terraingen.PopulateChunkEvent;
+import net.minecraftforge.event.terraingen.TerrainGen;
 
-import static net.minecraftforge.event.terraingen.InitMapGenEvent.EventType.*;
-import static net.minecraftforge.event.terraingen.PopulateChunkEvent.Populate.EventType.*;
-import net.minecraftforge.common.*;
-import net.minecraftforge.event.Event.*;
-import net.minecraftforge.event.terraingen.*;
+import com.block.TeleportationBlocks;
 
 public class ChunkProviderTp implements IChunkProvider
 {
@@ -278,10 +280,10 @@ public class ChunkProviderTp implements IChunkProvider
 								--var13;
 								par3ArrayOfByte[var17] = var15;
 
-								if (var13 == 0 && var15 == TeleporterMod.TeleportingGrass.blockID)
+								if (var13 == 0 && var15 == TeleportationBlocks.TeleportingGrass.blockID)
 								{
 									var13 = this.rand.nextInt(4);
-									var15 = (byte)TeleporterMod.TeleportingDirt.blockID;
+									var15 = (byte)TeleportationBlocks.TeleportingDirt.blockID;
 								}
 							}
 						}

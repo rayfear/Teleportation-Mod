@@ -19,10 +19,10 @@ public class WorldProviderTp extends WorldProvider
      */
 	public void registerWorldChunkManager()
 	{
-	         this.worldChunkMgr = new WorldChunkManagerTp(TeleporterMod.teleportbiome, 1.0F, 1.0F);	    
+	         this.worldChunkMgr = new WorldChunkManagerTp(TeleportationBiomes.teleportbiome, 1.0F, 1.0F);	    
 	         this.isHellWorld = false;
 	         this.hasNoSky = false;
-	         this.dimensionId = 20;
+	         this.dimensionId = TeleportationDimensions.dimension;
 	}
 	
 

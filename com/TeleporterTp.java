@@ -14,6 +14,8 @@ import net.minecraft.world.PortalPosition;
 import net.minecraft.world.Teleporter;
 import net.minecraft.world.WorldServer;
 
+import com.block.TeleportationBlocks;
+
 public class TeleporterTp extends Teleporter
 {
 
@@ -64,7 +66,7 @@ public class TeleporterTp extends Teleporter
       int var18 = var10 + var16;
       int var19 = var11 + var15 * var13 - var14 * var12;
       boolean var20 = var16 < 0;
-      this.worldServerInstance.setBlock(var17, var18, var19, var20 ? TeleporterMod.TpBlock.blockID : 0);
+      this.worldServerInstance.setBlock(var17, var18, var19, var20 ? TeleportationBlocks.TpBlock.blockID : 0);
      }
     }
    }
@@ -111,9 +113,9 @@ public class TeleporterTp extends Teleporter
 
       for (int var26 = this.worldServerInstance.getActualHeight() - 1; var26 >= 0; --var26)
      {
-      if (this.worldServerInstance.getBlockId(var48, var26, var23) == TeleporterMod.portal.blockID)
+      if (this.worldServerInstance.getBlockId(var48, var26, var23) == TeleportationBlocks.portal.blockID)
       {
-       while (this.worldServerInstance.getBlockId(var48, var26 - 1, var23) == TeleporterMod.portal.blockID)
+       while (this.worldServerInstance.getBlockId(var48, var26 - 1, var23) == TeleportationBlocks.portal.blockID)
        {
         --var26;
        }
@@ -147,22 +149,22 @@ public class TeleporterTp extends Teleporter
    var27 = (double) var14 + 0.5D;
    int var50 = -1;
 
-    if (this.worldServerInstance.getBlockId(var12 - 1, var13, var14) == TeleporterMod.portal.blockID)
+    if (this.worldServerInstance.getBlockId(var12 - 1, var13, var14) == TeleportationBlocks.portal.blockID)
    {
     var50 = 2;
    }
 
-    if (this.worldServerInstance.getBlockId(var12 + 1, var13, var14) == TeleporterMod.portal.blockID)
+    if (this.worldServerInstance.getBlockId(var12 + 1, var13, var14) == TeleportationBlocks.portal.blockID)
    {
     var50 = 0;
    }
 
-    if (this.worldServerInstance.getBlockId(var12, var13, var14 - 1) == TeleporterMod.portal.blockID)
+    if (this.worldServerInstance.getBlockId(var12, var13, var14 - 1) == TeleportationBlocks.portal.blockID)
    {
     var50 = 3;
    }
 
-    if (this.worldServerInstance.getBlockId(var12, var13, var14 + 1) == TeleporterMod.portal.blockID)
+    if (this.worldServerInstance.getBlockId(var12, var13, var14 + 1) == TeleportationBlocks.portal.blockID)
    {
     var50 = 1;
    }
@@ -447,7 +449,7 @@ public class TeleporterTp extends Teleporter
                       j3 = j5 + l2;
                       i4 = j2 + (i3 - 1) * l5 - k2 * k5;
                       flag = l2 < 0;
-                      this.worldServerInstance.setBlock(k3, j3, i4, flag ? TeleporterMod.TpBlock.blockID : 0);
+                      this.worldServerInstance.setBlock(k3, j3, i4, flag ? TeleportationBlocks.TpBlock.blockID : 0);
                   }
               }
           }
@@ -463,7 +465,7 @@ public class TeleporterTp extends Teleporter
                   j3 = j5 + l2;
                   i4 = j2 + (i3 - 1) * l5;
                   flag = i3 == 0 || i3 == 3 || l2 == -1 || l2 == 3;
-                  this.worldServerInstance.setBlock(k3, j3, i4, flag ? TeleporterMod.TpBlock.blockID : TeleporterMod.portal.blockID, 0, 2);
+                  this.worldServerInstance.setBlock(k3, j3, i4, flag ? TeleportationBlocks.TpBlock.blockID : TeleportationBlocks.portal.blockID, 0, 2);
               }
           }
 

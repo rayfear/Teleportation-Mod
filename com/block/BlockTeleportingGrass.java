@@ -1,9 +1,6 @@
 package com.block;
 
 import java.util.Random;
-
-import com.TeleporterMod;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
@@ -48,7 +45,7 @@ public class BlockTeleportingGrass extends Block
 	 */
 	public Icon getIcon(int par1, int par2)
 	{
-		return par1 == 1 ? this.iconGrassTop : (par1 == 0 ? TeleporterMod.TeleportingDirt.getBlockTextureFromSide(par1) : this.blockIcon);
+		return par1 == 1 ? this.iconGrassTop : (par1 == 0 ? TeleportationBlocks.TeleportingDirt.getBlockTextureFromSide(par1) : this.blockIcon);
 	}
 
 	/**
@@ -60,7 +57,7 @@ public class BlockTeleportingGrass extends Block
 		{
 			if (par1World.getBlockLightValue(par2, par3 + 1, par4) < 4 && par1World.getBlockLightOpacity(par2, par3 + 1, par4) > 2)
 			{
-				par1World.setBlock(par2, par3, par4, TeleporterMod.TeleportingDirt.blockID);
+				par1World.setBlock(par2, par3, par4, TeleportationBlocks.TeleportingDirt.blockID);
 			}
 			else if (par1World.getBlockLightValue(par2, par3 + 1, par4) >= 9)
 			{
@@ -71,7 +68,7 @@ public class BlockTeleportingGrass extends Block
 					int k1 = par4 + par5Random.nextInt(3) - 1;
 					int l1 = par1World.getBlockId(i1, j1 + 1, k1);
 
-					if (par1World.getBlockId(i1, j1, k1) == TeleporterMod.TeleportingDirt.blockID && par1World.getBlockLightValue(i1, j1 + 1, k1) >= 4 && par1World.getBlockLightOpacity(i1, j1 + 1, k1) <= 2)
+					if (par1World.getBlockId(i1, j1, k1) == TeleportationBlocks.TeleportingDirt.blockID && par1World.getBlockLightValue(i1, j1 + 1, k1) >= 4 && par1World.getBlockLightOpacity(i1, j1 + 1, k1) <= 2)
 					{
 						par1World.setBlock(i1, j1, k1, this.blockID);
 					}
@@ -85,7 +82,7 @@ public class BlockTeleportingGrass extends Block
 	 */
 	public int idDropped(int par1, Random par2Random, int par3)
 	{
-		return TeleporterMod.TeleportingDirt.idDropped(0, par2Random, par3);
+		return TeleportationBlocks.TeleportingDirt.idDropped(0, par2Random, par3);
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -101,7 +98,7 @@ public class BlockTeleportingGrass extends Block
 		}
 		else if (par5 == 0)
 		{
-			return TeleporterMod.TeleportingDirt.getBlockTextureFromSide(par5);
+			return TeleportationBlocks.TeleportingDirt.getBlockTextureFromSide(par5);
 		}
 		else
 		{

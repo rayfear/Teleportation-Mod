@@ -366,7 +366,7 @@ public class BlockTpFire extends BlockFire
      */
     public void onBlockAdded(World par1World, int par2, int par3, int par4)
     {
-        if (par1World.provider.dimensionId > 0 || par1World.getBlockId(par2, par3 - 1, par4) != TeleporterMod.TpBlock.blockID || !TeleporterMod.portal.tryToCreatePortal(par1World, par2, par3, par4))
+        if (par1World.provider.dimensionId > 0 || par1World.getBlockId(par2, par3 - 1, par4) != TeleportationBlocks.TpBlock.blockID || !TeleportationBlocks.portal.tryToCreatePortal(par1World, par2, par3, par4))
         {
             if (!par1World.doesBlockHaveSolidTopSurface(par2, par3 - 1, par4) && !this.canNeighborBurn(par1World, par2, par3, par4))
             {

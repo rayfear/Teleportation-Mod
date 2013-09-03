@@ -1,19 +1,16 @@
 package com.entity;
 
-import com.TeleporterMod;
-
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EntityDamageSourceIndirect;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
+
+import com.Item.TeleportationItems;
 
 public class EntityTeleportationMob extends EntityMob
 {
@@ -22,7 +19,7 @@ public class EntityTeleportationMob extends EntityMob
     /**
      * Counter to delay the teleportation of an mob towards the currently attacked target
      */
-    private int teleportDelay = 0;
+    private int teleportDelay = 100;
     private int field_70826_g = 0;
 
     public EntityTeleportationMob(World par1World)
@@ -243,7 +240,7 @@ public class EntityTeleportationMob extends EntityMob
      */
     protected int getDropItemId()
     {
-        return TeleporterMod.LookingEye.itemID;
+        return TeleportationItems.LookingEye.itemID;
     }
 
     /**
