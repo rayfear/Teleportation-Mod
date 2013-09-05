@@ -19,6 +19,10 @@ public class TeleportationItems
 	public final static Item FlintAndDiamond = new ItemFlintAndDiamond(TeleportationConfig.FlintAndDiamondID);
 	public final static Item LookingEye = new ItemLookingEye(TeleportationConfig.LookingEyeID);
 	
+	public final static Item tpArrow = new ItemTeleportationArrow(TeleportationConfig.tpArrowID).setCreativeTab(TeleporterMod.TpTab);
+	public final static Item tpBow = new ItemTeleportationBow(TeleportationConfig.tpBowID).setCreativeTab(TeleporterMod.TpTab);
+
+	
 	public static void registerItems()
 	{
 		LanguageRegistry.addName(LookingWand, "Teleportation Wand");
@@ -30,6 +34,8 @@ public class TeleportationItems
 		LanguageRegistry.addName(TeleportationBall, "Teleportation Orb");
 		LanguageRegistry.addName(MiniPortal, "Portal Wand Top");
 		LanguageRegistry.addName(LookingEye, "Watching Eye");
+		LanguageRegistry.addName(tpArrow, "Teleportation Arrow");
+		LanguageRegistry.addName(tpBow, "Teleportation Bow");
 		
 		TeleportationShards.setCreativeTab(TeleporterMod.TpTab);
 		ObsidianSticks.setCreativeTab(TeleporterMod.TpTab);

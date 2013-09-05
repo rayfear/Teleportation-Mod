@@ -15,7 +15,9 @@ public class TeleportationConfig
 	public static int MiniPortalID;
 	public static int FlintAndDiamondID;
 	public static int LookingEyeID;
-
+	public static int tpBowID;
+	public static int tpArrowID;
+	
 	public static int TeleportationDirtID;
 	public static int TeleportationGrassID;
 	public static int TeleportationOreID;
@@ -62,6 +64,12 @@ public class TeleportationConfig
 				"Teleportation Shards ID", 5005).getInt();
 		TeleporterRememberID = config.get(Configuration.CATEGORY_ITEM,
 				"Teleporter Remember ID", 5001).getInt();
+		
+		tpBowID = config.get(Configuration.CATEGORY_ITEM,
+				"Teleportation Bow ID", 5010).getInt();
+		
+		tpArrowID = config.get(Configuration.CATEGORY_ITEM,
+				"Teleportation Arrow ID", 5011).getInt();
 
 		//General
 		enable3D = config.get(Configuration.CATEGORY_GENERAL, "Should Enable 3D Items", true);

@@ -74,6 +74,20 @@ public class TeleportationCrafting
 				"s",
 				
 				'e', TeleportationItems.LookingEye, 's', TeleportationItems.ObsidianSticks);
+		
+		GameRegistry.addRecipe(new ItemStack(TeleportationItems.tpBow, 1),
+				" os",
+				"oes",
+				" os",
+				
+				'o', TeleportationItems.ObsidianSticks, 's', Item.silk, 'e', Item.enderPearl);
+		
+		GameRegistry.addRecipe(new ItemStack(TeleportationItems.tpArrow, 4),
+				"e",
+				"o",
+				"f",
+				
+				'o', TeleportationItems.ObsidianSticks, 'f', Item.feather, 'e', Item.enderPearl);
 
 
 	}
