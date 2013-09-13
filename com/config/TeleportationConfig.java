@@ -17,6 +17,7 @@ public class TeleportationConfig
 	public static int LookingEyeID;
 	public static int tpBowID;
 	public static int tpArrowID;
+	public static int TpSwordID;
 	
 	public static int TeleportationDirtID;
 	public static int TeleportationGrassID;
@@ -24,6 +25,7 @@ public class TeleportationConfig
 	public static int FireID;
 	public static int portalID;
 	public static int TPBlockID;
+
 	
 	public static Property enable3D;
 
@@ -70,6 +72,10 @@ public class TeleportationConfig
 		
 		tpArrowID = config.get(Configuration.CATEGORY_ITEM,
 				"Teleportation Arrow ID", 5011).getInt();
+		
+		
+		TpSwordID = config.get(Configuration.CATEGORY_ITEM,
+				"Teleportation Sword ID", 5012).getInt();
 
 		//General
 		enable3D = config.get(Configuration.CATEGORY_GENERAL, "Should Enable 3D Items", true);

@@ -88,6 +88,14 @@ public class TeleportationCrafting
 				"f",
 				
 				'o', TeleportationItems.ObsidianSticks, 'f', Item.feather, 'e', Item.enderPearl);
+		
+		GameRegistry.addRecipe(new ItemStack(TeleportationItems.tpSword, 1),
+				"ete",
+				"ete",
+				" o ",
+				
+				'o', TeleportationItems.ObsidianSticks, 'e', Item.enderPearl, 't', TeleportationItems.TeleportationShards);
+		
 
 
 	}

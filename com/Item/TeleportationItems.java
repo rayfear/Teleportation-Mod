@@ -1,5 +1,6 @@
 package com.Item;
 
+import net.minecraft.item.EnumToolMaterial;
 import net.minecraft.item.Item;
 
 import com.TeleporterMod;
@@ -22,6 +23,7 @@ public class TeleportationItems
 	public final static Item tpArrow = new ItemTeleportationArrow(TeleportationConfig.tpArrowID).setCreativeTab(TeleporterMod.TpTab);
 	public final static Item tpBow = new ItemTeleportationBow(TeleportationConfig.tpBowID).setCreativeTab(TeleporterMod.TpTab);
 
+	public static final Item tpSword = new ItemTpSword(TeleportationConfig.TpSwordID, EnumToolMaterial.WOOD).setCreativeTab(TeleporterMod.TpTab);
 	
 	public static void registerItems()
 	{
@@ -36,6 +38,7 @@ public class TeleportationItems
 		LanguageRegistry.addName(LookingEye, "Watching Eye");
 		LanguageRegistry.addName(tpArrow, "Teleportation Arrow");
 		LanguageRegistry.addName(tpBow, "Teleportation Bow");
+		LanguageRegistry.addName(tpSword, "Teleportation Sword");
 		
 		TeleportationShards.setCreativeTab(TeleporterMod.TpTab);
 		ObsidianSticks.setCreativeTab(TeleporterMod.TpTab);

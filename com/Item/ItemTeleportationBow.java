@@ -7,7 +7,7 @@ import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumAction;
-import net.minecraft.item.Item;
+import net.minecraft.item.ItemBow;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -23,7 +23,7 @@ import com.entity.EntityTpArrow;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class ItemTeleportationBow extends Item
+public class ItemTeleportationBow extends ItemBow
 {
 
 	public ItemTeleportationBow(int par1)
@@ -32,6 +32,7 @@ public class ItemTeleportationBow extends Item
 		this.setUnlocalizedName("tpBow");
 		this.maxStackSize = 1;
 	    this.setMaxDamage(384);
+	    this.setFull3D();
 	}
 
 	@SideOnly(Side.CLIENT)
