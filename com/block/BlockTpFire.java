@@ -1,27 +1,24 @@
 package com.block;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import java.util.Random;
-
-import com.TeleporterMod;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockFire;
-import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.Icon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldProviderEnd;
-
+import net.minecraftforge.common.ForgeDirection;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraftforge.common.ForgeDirection;
 import static net.minecraftforge.common.ForgeDirection.*;
 
 public class BlockTpFire extends BlockFire
 {
-    /** The chance this block will encourage nearby blocks to catch on fire */
+
+	/** The chance this block will encourage nearby blocks to catch on fire */
     private int[] chanceToEncourageFire = new int[256];
 
     /**
@@ -61,6 +58,8 @@ public class BlockTpFire extends BlockFire
         this.setBurnRate(Block.tallGrass.blockID, 60, 100);
         this.setBurnRate(Block.cloth.blockID, 30, 60);
         this.setBurnRate(Block.vine.blockID, 15, 100);
+        this.setBurnRate(Block.coalBlock.blockID, 5, 5);
+        this.setBurnRate(Block.hay.blockID, 60, 20);
     }
 
     /**
@@ -473,11 +472,11 @@ public class BlockTpFire extends BlockFire
      */
     public void registerIcons(IconRegister par1IconRegister)
     {
-        this.iconArray = new Icon[] {par1IconRegister.registerIcon("fire_0"), par1IconRegister.registerIcon("fire_1")};
+        this.iconArray = new Icon[] {par1IconRegister.registerIcon(this.getTextureName() + "_layer_0"), par1IconRegister.registerIcon(this.getTextureName() + "_layer_1")};
     }
 
     @SideOnly(Side.CLIENT)
-    public Icon func_94438_c(int par1)
+    public Icon getFireIcon(int par1)
     {
         return this.iconArray[par1];
     }
@@ -487,7 +486,7 @@ public class BlockTpFire extends BlockFire
     /**
      * From the specified side and block metadata retrieves the blocks texture. Args: side, metadata
      */
-    public Icon getBlockTextureFromSideAndMetadata(int par1, int par2)
+    public Icon getIcon(int par1, int par2)
     {
         return this.iconArray[0];
     }

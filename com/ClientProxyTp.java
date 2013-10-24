@@ -14,6 +14,8 @@ import com.entity.TeleportationEntities;
 import com.world.TeleportationBiomes;
 import com.world.TeleportationDimensions;
 
+import cpw.mods.fml.common.registry.GameRegistry;
+
 public class ClientProxyTp extends CommonProxyTp
 {
 
@@ -34,7 +36,6 @@ public class ClientProxyTp extends CommonProxyTp
 		TeleportationEntities.registerEntities();
 		TeleportationBiomes.registerBiomes();
 		TeleportationDimensions.registerDimensions();
-		
 		
 	}
 }

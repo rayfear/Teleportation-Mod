@@ -3,6 +3,7 @@ package com;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraftforge.common.Configuration;
 
+import com.command.CommandJump;
 import com.config.TeleportationConfig;
 import com.tab.TabTeleportation;
 import com.world.OreWorldGenerator;
@@ -14,6 +15,7 @@ import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
@@ -51,6 +53,12 @@ public class TeleporterMod
 	{
 		TeleportationConfig.loadConfig(new Configuration(e.getSuggestedConfigurationFile()));
 	}
+	
+	  @EventHandler
+	  public void serverLoad(FMLServerStartingEvent event)
+	  {
+	    event.registerServerCommand(new CommandJump());
+	  }
 
 	
 }

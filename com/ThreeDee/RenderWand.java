@@ -45,7 +45,7 @@ public class RenderWand implements IItemRenderer
 	public void renderWand(ItemRenderType type)
 	{
 		GL11.glPushMatrix();
-		Minecraft.getMinecraft().renderEngine.func_110577_a(png);
+		Minecraft.getMinecraft().renderEngine.bindTexture(png);
 		
 		if(type == ItemRenderType.EQUIPPED)
 		{

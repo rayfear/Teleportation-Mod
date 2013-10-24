@@ -187,7 +187,7 @@ public class ItemTeleportationBow extends ItemBow
 					{
 						par3EntityPlayer.addChatMessage("You haven't got any co-ords set. Register your co-ords by sneaking and right clicking!");
 					}
-					EntityTpArrow tpArrow = new EntityTpArrow(par2World, par3EntityPlayer, f * 2.0F);
+					EntityTpArrow tpArrow = new EntityTpArrow(par2World, par3EntityPlayer, f * 2.0F, x ,y ,z);
 
 					if (f == 1.0F)
 					{

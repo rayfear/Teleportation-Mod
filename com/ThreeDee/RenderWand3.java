@@ -42,7 +42,7 @@ public class RenderWand3 implements IItemRenderer
 
 	public void renderWand(ItemRenderType type)
 	{
-		Minecraft.getMinecraft().renderEngine.func_110577_a(png);
+		Minecraft.getMinecraft().renderEngine.bindTexture(png);
 		
 		if(type == ItemRenderType.EQUIPPED)
 		{

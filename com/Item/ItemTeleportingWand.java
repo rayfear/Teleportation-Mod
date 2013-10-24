@@ -35,9 +35,6 @@ public class ItemTeleportingWand extends Item
 	       this.maxStackSize = 1;
 	       this.setMaxDamage(101);
 	       this.isFull3D();
-    
-	
-			
 	}
 
 	private int _index;
@@ -57,15 +54,32 @@ public class ItemTeleportingWand extends Item
     public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
     {
     	par1ItemStack.damageItem(1, par3EntityPlayer);
-    	if (hasSavedPosition(par1ItemStack))
-        {	
-    		readPosition(par1ItemStack, par3EntityPlayer);
-    		par3EntityPlayer.fallDistance = 0F;
+    	if(!par3EntityPlayer.isSneaking())
+    	{
+    		if (hasSavedPosition(par1ItemStack))
+            {	
+        		readPosition(par1ItemStack, par3EntityPlayer);
+        		par3EntityPlayer.fallDistance = 0F;
+        	}
+        	else
+        	{
+        		savePosition(par1ItemStack, par3EntityPlayer);
+        	}
     	}
     	else
     	{
-    		savePosition(par1ItemStack, par3EntityPlayer);
+    		if(!hasSavedPosition(par1ItemStack))
+    		{
+    			savePosition(par1ItemStack, par3EntityPlayer);
+    		}
+    		else
+    		{
+    			par1ItemStack.stackTagCompound.removeTag("position");
+    			savePosition(par1ItemStack, par3EntityPlayer);
+    		}
+    		
     	}
+    	
          return par1ItemStack;
     }
 

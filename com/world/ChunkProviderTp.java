@@ -649,9 +649,9 @@ public class ChunkProviderTp implements IChunkProvider
 		 return null;
 	 }
 
-	 @Override
-	 public void func_104112_b() 
-	 {
-
-	 }
+	@Override
+	public void saveExtraData()
+	{
+		
+	}
 }

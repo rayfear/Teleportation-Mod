@@ -27,12 +27,12 @@ public class TeleportationItems
 	
 	public static void registerItems()
 	{
-		LanguageRegistry.addName(LookingWand, "Teleportation Wand");
+		LanguageRegistry.addName(LookingWand, "Jump Wand");
 		LanguageRegistry.addName(ObsidianSticks, "Obsidian Sticks");
 		LanguageRegistry.addName(TeleportationShards, "Teleportation Shards");
 		LanguageRegistry.addName(FlintAndDiamond, "Flint and Diamond");
 		LanguageRegistry.addName(Teleporter, "Portal Teleportation Wand");
-		LanguageRegistry.addName(TeleporterRemember, "Teleportation Wand");
+		LanguageRegistry.addName(TeleporterRemember, "Warp Wand");
 		LanguageRegistry.addName(TeleportationBall, "Teleportation Orb");
 		LanguageRegistry.addName(MiniPortal, "Portal Wand Top");
 		LanguageRegistry.addName(LookingEye, "Watching Eye");
