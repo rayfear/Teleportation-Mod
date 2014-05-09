@@ -1,24 +1,18 @@
 package tpmod.block;
 
-import java.util.Random;
-
+import tpmod.TeleportationMod;
 import net.minecraft.block.BlockStone;
-import net.minecraft.client.renderer.texture.IconRegister;
 
 public class BlockTpBlock extends BlockStone
 {
-    public BlockTpBlock(int par1, int par2)
+    public BlockTpBlock()
     {
-        super(par1);
+        super();
+        this.setHarvestLevel("pickaxe", 2);
+        this.setBlockName("TeleportationBlock");
+        this.setHardness(5F);
+        this.setBlockTextureName(TeleportationBlocks.modID("teleportation_block"));
+        this.setCreativeTab(TeleportationMod.teleportationTab);
     }
-    public int idDropped(int par1, Random par2Random, int par3)
-    {
-        return 2408;
-    }
-
-    @Override
-    public void registerIcons(IconRegister iconRegister)
-    {
-        blockIcon = iconRegister.registerIcon("tpmod:Tp_Block");
-    }
+    
 }

@@ -68,7 +68,7 @@ public class WorldChunkManagerTp extends WorldChunkManager
      * Finds a valid position within a range, that is in one of the listed biomes. Searches {par1,par2} +-par3 blocks.
      * Strongly favors positive y positions.
      */
-    public ChunkPosition findBiomePosition(int par1, int par2, int par3, List par4List, Random par5Random)
+    public ChunkPosition findBiomePosition(int par1, int par2, int par3, @SuppressWarnings("rawtypes") List par4List, Random par5Random)
     {
         return par4List.contains(this.biomeGenerator) ? new ChunkPosition(par1 - par3 + par5Random.nextInt(par3 * 2 + 1), 0, par2 - par3 + par5Random.nextInt(par3 * 2 + 1)) : null;
     }
@@ -76,7 +76,7 @@ public class WorldChunkManagerTp extends WorldChunkManager
     /**
      * checks given Chunk's Biomes against List of allowed ones
      */
-    public boolean areBiomesViable(int par1, int par2, int par3, List par4List)
+    public boolean areBiomesViable(int par1, int par2, int par3, @SuppressWarnings("rawtypes") List par4List)
     {
         return par4List.contains(this.biomeGenerator);
     }

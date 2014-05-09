@@ -4,26 +4,31 @@ import java.util.Random;
 
 import net.minecraft.entity.monster.EntityEnderman;
 import net.minecraft.world.biome.BiomeGenBase;
-import net.minecraft.world.biome.SpawnListEntry;
-import net.minecraft.world.gen.feature.WorldGenerator;
-import tpmod.TeleporterMod;
+import net.minecraft.world.gen.feature.WorldGenAbstractTree;
+import tpmod.TeleportationMod;
 import tpmod.block.TeleportationBlocks;
+import tpmod.entity.EntityWatcher;
 
 public class BiomeGenTeleport extends BiomeGenBase
 {
-    public BiomeGenTeleport(int par1)
+    @SuppressWarnings("unchecked")
+	public BiomeGenTeleport(int par1)
     {
         super(par1);
         this.spawnableMonsterList.clear();
         this.spawnableWaterCreatureList.clear();
+        this.spawnableWaterCreatureList.clear();
+        this.spawnableCaveCreatureList.clear();
         this.theBiomeDecorator.treesPerChunk = 2;
-        this.fillerBlock = (byte)TeleportationBlocks.TeleportingDirt.blockID;
-        this.topBlock = (byte)TeleportationBlocks.TeleportingGrass.blockID;
+        this.fillerBlock = TeleportationBlocks.teleportationDirt;
+        this.topBlock = TeleportationBlocks.teleportationGrass;
         setColor(244);
-        this.spawnableCreatureList.add(new SpawnListEntry(EntityEnderman.class, 300, 4, 8));
+        this.spawnableMonsterList.add(new SpawnListEntry(EntityEnderman.class, 30, 1, 2));
+        this.spawnableMonsterList.add(new SpawnListEntry(EntityWatcher.class, 50, 2, 4));
     }
-    public WorldGenerator getRandomWorldGenForTrees(Random par1Random)
+    
+    public WorldGenAbstractTree func_150567_a(Random random)
     {
-        return (WorldGenerator)(par1Random.nextInt(10) == 0 ? TeleporterMod.worldGeneratorTeleTree : (par1Random.nextInt(2) == 0 ? new WorldGenTeleportTrees(false, 3, 0, waterColorMultiplier, false) : (par1Random.nextInt(3) == 0 ? new WorldGenTeleportTrees(false, 10 + par1Random.nextInt(20), 3, 3, false) : new WorldGenTeleportTrees(false, 4 + par1Random.nextInt(7), 3, 3, false))));
+        return (WorldGenAbstractTree)(random.nextInt(10) == 0 ? TeleportationMod.worldGeneratorTeleTree : (random.nextInt(2) == 0 ? new WorldGenTeleportTrees(true, true) : (random.nextInt(3) == 0 ? new WorldGenTeleportTrees(true, false) : new WorldGenTeleportTrees(true, true))));
     }
 }

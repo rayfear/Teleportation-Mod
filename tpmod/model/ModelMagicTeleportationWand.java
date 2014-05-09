@@ -4,20 +4,19 @@ import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 
-public class ModelWand extends ModelBase
+public class ModelMagicTeleportationWand extends ModelBase
 {
     public ModelRenderer parts[] = new ModelRenderer[7];
 
-    //fields
-    ModelRenderer Handle;
-    ModelRenderer Main_Structure;
-    ModelRenderer Holder1;
-    ModelRenderer Holder2;
-    ModelRenderer Holder3;
-    ModelRenderer Holder_4;
-    ModelRenderer Ball_of_magic;
+    private ModelRenderer Handle;
+    private ModelRenderer Main_Structure;
+    private ModelRenderer Holder1;
+    private ModelRenderer Holder2;
+    private ModelRenderer Holder3;
+    private ModelRenderer Holder_4;
+    private ModelRenderer Ball_of_magic;
 
-    public ModelWand()
+    public ModelMagicTeleportationWand()
     {
         textureWidth = 64;
         textureHeight = 32;

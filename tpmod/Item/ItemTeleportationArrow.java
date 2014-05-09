@@ -1,21 +1,21 @@
-package tpmod.Item;
+package tpmod.item;
 
-import net.minecraft.client.renderer.texture.IconRegister;
-import net.minecraft.item.Item;
+import tpmod.TeleportationMod;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.item.Item;
 
 public class ItemTeleportationArrow extends Item
 {
-    public ItemTeleportationArrow(int par1)
+    public ItemTeleportationArrow()
     {
-        super(par1);
-        this.setUnlocalizedName("tpArrow");
+        super();
     }
-
+    
     @SideOnly(Side.CLIENT)
-    public void registerIcons(IconRegister par1IconRegister)
+    public void registerIcons(IIconRegister iconReg)
     {
-        this.itemIcon = par1IconRegister.registerIcon("tpmod:tpArrow");
+        this.itemIcon = iconReg.registerIcon(TeleportationMod.MODID + ":" + "Teleportation Arrow");
     }
 }

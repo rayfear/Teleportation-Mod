@@ -1,4 +1,4 @@
-package tpmod.positions;
+package tpmod.location;
 
 import net.minecraft.util.ChunkCoordinates;
 import tpmod.teleporter.TeleporterClient;

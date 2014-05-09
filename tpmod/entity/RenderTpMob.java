@@ -17,13 +17,13 @@ public class RenderTpMob extends RenderLiving
         super(par1ModelBase, par2);
     }
 
-    protected ResourceLocation func_110832_a(EntityTeleportationMob par1EntityTeleportationMob)
+    protected ResourceLocation func_110832_a(EntityWatcher par1EntityTeleportationMob)
     {
         return field_110833_a;
     }
 
     protected ResourceLocation getEntityTexture(Entity par1Entity)
     {
-        return this.func_110832_a((EntityTeleportationMob)par1Entity);
+        return this.func_110832_a((EntityWatcher)par1Entity);
     }
 }

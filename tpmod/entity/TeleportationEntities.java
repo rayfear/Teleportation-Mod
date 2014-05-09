@@ -1,45 +1,39 @@
 package tpmod.entity;
 
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityEggInfo;
 import net.minecraft.entity.EntityList;
-import net.minecraft.entity.EnumCreatureType;
-import tpmod.TeleporterMod;
-import tpmod.model.ModelTeleportationMob;
-import tpmod.world.TeleportationBiomes;
-import cpw.mods.fml.client.registry.RenderingRegistry;
+import net.minecraft.entity.EntityList.EntityEggInfo;
+import tpmod.TeleportationMod;
 import cpw.mods.fml.common.registry.EntityRegistry;
-import cpw.mods.fml.common.registry.LanguageRegistry;
 
 public class TeleportationEntities
 {
-    static int startEntityId = 345;
+	static int startEntityId = 345;
 
-    public static void registerEntities()
-    {
-        EntityRegistry.registerModEntity(EntityTeleportationMob.class, "TpMob", 1, TeleporterMod.instance, 80, 1, true);
-        EntityRegistry.addSpawn(EntityTeleportationMob.class, 20, 2, 4, EnumCreatureType.monster,  TeleportationBiomes.teleportbiome);
-        LanguageRegistry.instance().addStringLocalization("TpMob", "TpMob");
-        registerEntityEgg(EntityTeleportationMob.class, 0x505B09, 0x161616);
-        LanguageRegistry.instance().addStringLocalization("entity.tpmod.TpMob.name", "Tp Mob");
-        RenderingRegistry.instance().registerEntityRenderingHandler(EntityTeleportationMob.class, new RenderTpMob(new ModelTeleportationMob(), 0.3F));
-    }
+	public static void registerEntities()
+	{
+		EntityRegistry.registerModEntity(EntityWatcher.class, "TpMob", 1, TeleportationMod.INSTANCE, 80, 1, true);
+		EntityRegistry.registerModEntity(EntityObserver.class, "Observer", 2, TeleportationMod.INSTANCE, 80, 1, true);
+		registerEntityEgg(EntityWatcher.class, 0x505B09, 0x161616);
+		registerEntityEgg(EntityObserver.class, 0x1D1D1D, 0x1820F2);
+	}
 
-    public static int getUniqueEntityId()
-    {
-        do
-        {
-            startEntityId++;
-        }
-        while (EntityList.getStringFromID(startEntityId) != null);
+	public static int getUniqueEntityId()
+	{
+		do
+		{
+			startEntityId++;
+		}
+		while (EntityList.getStringFromID(startEntityId) != null);
 
-        return startEntityId;
-    }
+		return startEntityId;
+	}
 
-    public static void registerEntityEgg(Class <? extends Entity > entity, int primaryColor, int secondaryColor)
-    {
-        int id = getUniqueEntityId();
-        EntityList.IDtoClassMapping.put(id, entity);
-        EntityList.entityEggs.put(id, new EntityEggInfo(id, primaryColor, secondaryColor));
-    }
+	@SuppressWarnings("unchecked")
+	public static void registerEntityEgg(Class <? extends Entity > entity, int primaryColor, int secondaryColor)
+	{
+		int id = getUniqueEntityId();
+		EntityList.IDtoClassMapping.put(id, entity);
+		EntityList.entityEggs.put(id, new EntityEggInfo(id, primaryColor, secondaryColor));
+	}
 }

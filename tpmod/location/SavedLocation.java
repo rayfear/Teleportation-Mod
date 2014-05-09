@@ -1,4 +1,4 @@
-package tpmod.positions;
+package tpmod.location;
 
 public class SavedLocation
 {

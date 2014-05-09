@@ -32,7 +32,7 @@ public class OreWorldGenerator implements IWorldGenerator
             int randPosX = chunkX + rand.nextInt(16);
             int randPosY = rand.nextInt(10);
             int randPosZ = chunkZ + rand.nextInt(16);
-            (new WorldGenMinable(TeleportationBlocks.TeleportingOre.blockID, 4)).generate(world, rand, randPosX, randPosY, randPosZ);
+            (new WorldGenMinable(TeleportationBlocks.teleportationOre, 4)).generate(world, rand, randPosX, randPosY, randPosZ);
         }
     }
 

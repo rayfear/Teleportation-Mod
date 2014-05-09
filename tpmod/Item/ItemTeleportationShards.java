@@ -1,21 +1,20 @@
-package tpmod.Item;
+package tpmod.item;
 
-import net.minecraft.client.renderer.texture.IconRegister;
-import net.minecraft.creativetab.CreativeTabs;
+import tpmod.TeleportationMod;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.item.Item;
 
 public class ItemTeleportationShards extends Item
 {
-    public ItemTeleportationShards(int id)
+    public ItemTeleportationShards()
     {
-        super(id);
-        this.setUnlocalizedName("Teleport_Shards");
-        this.setCreativeTab(CreativeTabs.tabMaterials);
+    	super();
     }
-
-    @Override
-    public void registerIcons(IconRegister iconRegister)
+    @SideOnly(Side.CLIENT)
+    public void registerIcons(IIconRegister iconReg)
     {
-        itemIcon = iconRegister.registerIcon("tpmod:Teleport_Shards");
+        this.itemIcon = iconReg.registerIcon(TeleportationMod.MODID + ":" + "Teleportation Shards");
     }
 }

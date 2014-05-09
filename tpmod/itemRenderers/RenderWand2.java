@@ -8,11 +8,11 @@ import net.minecraftforge.client.IItemRenderer;
 import org.lwjgl.Sys;
 import org.lwjgl.opengl.GL11;
 
-import tpmod.model.ModelWand2;
+import tpmod.model.ModelPortalTeleportationWand;
 
 public class RenderWand2 implements IItemRenderer
 {
-    protected ModelWand2 model = new ModelWand2();
+    protected ModelPortalTeleportationWand model = new ModelPortalTeleportationWand();
     private static final ResourceLocation png = new ResourceLocation("tpmod:textures/3D/Wand2.png");
     public boolean handleRenderType(ItemStack stack, IItemRenderer.ItemRenderType type)
     {

@@ -1,11 +1,18 @@
 package tpmod.entity;
 
+import java.util.UUID;
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.monster.EntityMob;
+import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraft.entity.ai.attributes.IAttributeInstance;
+import net.minecraft.entity.monster.EntityEnderman;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EntityDamageSource;
 import net.minecraft.util.EntityDamageSourceIndirect;
@@ -14,43 +21,56 @@ import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.EnderTeleportEvent;
-import tpmod.Item.TeleportationItems;
+import tpmod.item.TeleportationItems;
 
-public class EntityTeleportationMob extends EntityMob
+public class EntityWatcher extends EntityEnderman
 {
+    private static final UUID attackingSpeedBoostModifierUUID = UUID.fromString("020E0DFB-87AE-4653-9556-831010E291A0");
+    private static final AttributeModifier attackingSpeedBoostModifier = (new AttributeModifier(attackingSpeedBoostModifierUUID, "Attacking speed boost", 6.199999809265137D, 0)).setSaved(false);
     /**
-     * Counter to delay the teleportation of an Tp Mob towards the currently attacked target
+     * Counter to delay the teleportation of an enderman towards the currently attacked target
      */
     private int teleportDelay;
-
     /**
-     * A player must stare at an Tp Mob for 5 ticks before it becomes aggressive. This field counts those ticks.
+     * A player must stare at an enderman for 5 ticks before it becomes aggressive. This field counts those ticks.
      */
     private int stareTimer;
     private Entity lastEntityToAttack;
     private boolean isAggressive;
-
-    public EntityTeleportationMob(World par1World)
+    public EntityWatcher(World par1World)
     {
         super(par1World);
-        this.setSize(0.7F, 0.5F);
+        this.setSize(0.6F, 0.6F);
         this.stepHeight = 1.0F;
     }
 
     protected void applyEntityAttributes()
     {
         super.applyEntityAttributes();
-        this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setAttribute(8.0D);
-        this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setAttribute(0.30000001192092896D);
-        this.getEntityAttribute(SharedMonsterAttributes.attackDamage).setAttribute(7.0D);
+        this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(7.0D);
+        this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(0.30000001192092896D);
+        this.getEntityAttribute(SharedMonsterAttributes.attackDamage).setBaseValue(5.0D);
     }
 
     protected void entityInit()
     {
         super.entityInit();
-        this.dataWatcher.addObject(16, new Byte((byte)0));
-        this.dataWatcher.addObject(17, new Byte((byte)0));
-        this.dataWatcher.addObject(18, new Byte((byte)0));
+    }
+
+    /**
+     * (abstract) Protected helper method to write subclass entity data to NBT.
+     */
+    public void writeEntityToNBT(NBTTagCompound par1NBTTagCompound)
+    {
+        super.writeEntityToNBT(par1NBTTagCompound);
+    }
+
+    /**
+     * (abstract) Protected helper method to read subclass entity data from NBT.
+     */
+    public void readEntityFromNBT(NBTTagCompound par1NBTTagCompound)
+    {
+        super.readEntityFromNBT(par1NBTTagCompound);
     }
 
     /**
@@ -69,7 +89,7 @@ public class EntityTeleportationMob extends EntityMob
 
                 if (this.stareTimer == 0)
                 {
-                    this.worldObj.playSoundAtEntity(entityplayer, "mob.endermen.stare", 1.0F, 1.0F);
+                    this.worldObj.playSoundEffect(entityplayer.posX, entityplayer.posY, entityplayer.posZ, "mob.endermen.stare", 1.0F, 1.0F);
                 }
 
                 if (this.stareTimer++ == 5)
@@ -89,13 +109,13 @@ public class EntityTeleportationMob extends EntityMob
     }
 
     /**
-     * Checks to see if this Tp Mob should be attacking this player
+     * Checks to see if this enderman should be attacking this player
      */
     private boolean shouldAttackPlayer(EntityPlayer par1EntityPlayer)
     {
         ItemStack itemstack = par1EntityPlayer.inventory.armorInventory[3];
 
-        if (itemstack != null && itemstack.itemID == Block.pumpkin.blockID)
+        if (itemstack != null && itemstack.getItem() == Item.getItemFromBlock(Blocks.pumpkin))
         {
             return false;
         }
@@ -121,10 +141,22 @@ public class EntityTeleportationMob extends EntityMob
             this.attackEntityFrom(DamageSource.drown, 1.0F);
         }
 
-        this.lastEntityToAttack = this.entityToAttack;
-        int i;
+        if (this.lastEntityToAttack != this.entityToAttack)
+        {
+            IAttributeInstance iattributeinstance = this.getEntityAttribute(SharedMonsterAttributes.movementSpeed);
+            iattributeinstance.removeModifier(attackingSpeedBoostModifier);
 
-        for (i = 0; i < 2; ++i)
+            if (this.entityToAttack != null)
+            {
+                iattributeinstance.applyModifier(attackingSpeedBoostModifier);
+            }
+        }
+
+        this.lastEntityToAttack = this.entityToAttack;
+        int k;
+
+
+        for (k = 0; k < 2; ++k)
         {
             this.worldObj.spawnParticle("portal", this.posX + (this.rand.nextDouble() - 0.5D) * (double)this.width, this.posY + this.rand.nextDouble() * (double)this.height - 0.25D, this.posZ + (this.rand.nextDouble() - 0.5D) * (double)this.width, (this.rand.nextDouble() - 0.5D) * 2.0D, -this.rand.nextDouble(), (this.rand.nextDouble() - 0.5D) * 2.0D);
         }
@@ -191,7 +223,7 @@ public class EntityTeleportationMob extends EntityMob
     }
 
     /**
-     * Teleport the Tp Mob to a random nearby position
+     * Teleport the enderman to a random nearby position
      */
     protected boolean teleportRandomly()
     {
@@ -202,7 +234,7 @@ public class EntityTeleportationMob extends EntityMob
     }
 
     /**
-     * Teleport the Tp Mob to another entity
+     * Teleport the enderman to another entity
      */
     protected boolean teleportToEntity(Entity par1Entity)
     {
@@ -216,17 +248,14 @@ public class EntityTeleportationMob extends EntityMob
     }
 
     /**
-     * Teleport the Tp Mob
+     * Teleport the enderman
      */
     protected boolean teleportTo(double par1, double par3, double par5)
     {
         EnderTeleportEvent event = new EnderTeleportEvent(this, par1, par3, par5, 0);
-
-        if (MinecraftForge.EVENT_BUS.post(event))
-        {
+        if (MinecraftForge.EVENT_BUS.post(event)){
             return false;
         }
-
         double d3 = this.posX;
         double d4 = this.posY;
         double d5 = this.posZ;
@@ -237,7 +266,6 @@ public class EntityTeleportationMob extends EntityMob
         int i = MathHelper.floor_double(this.posX);
         int j = MathHelper.floor_double(this.posY);
         int k = MathHelper.floor_double(this.posZ);
-        int l;
 
         if (this.worldObj.blockExists(i, j, k))
         {
@@ -245,9 +273,9 @@ public class EntityTeleportationMob extends EntityMob
 
             while (!flag1 && j > 0)
             {
-                l = this.worldObj.getBlockId(i, j - 1, k);
+                Block block = this.worldObj.getBlock(i, j - 1, k);
 
-                if (l != 0 && Block.blocksList[l].blockMaterial.blocksMovement())
+                if (block.getMaterial().blocksMovement())
                 {
                     flag1 = true;
                 }
@@ -278,7 +306,7 @@ public class EntityTeleportationMob extends EntityMob
         {
             short short1 = 128;
 
-            for (l = 0; l < short1; ++l)
+            for (int l = 0; l < short1; ++l)
             {
                 double d6 = (double)l / ((double)short1 - 1.0D);
                 float f = (this.rand.nextFloat() - 0.5F) * 0.2F;
@@ -320,12 +348,9 @@ public class EntityTeleportationMob extends EntityMob
         return "mob.endermen.death";
     }
 
-    /**
-     * Returns the item ID for the item the mob drops on death.
-     */
-    protected int getDropItemId()
+    protected Item getDropItem()
     {
-        return TeleportationItems.LookingEye.itemID;
+        return TeleportationItems.watchingEye;
     }
 
     /**
@@ -334,22 +359,27 @@ public class EntityTeleportationMob extends EntityMob
      */
     protected void dropFewItems(boolean par1, int par2)
     {
-        int j = this.getDropItemId();
+    	 int j = this.rand.nextInt(3) + this.rand.nextInt(1 + par2);
+         int k;
 
-        if (j > 0)
-        {
-            int k = this.rand.nextInt(2 + par2);
+         for (k = 0; k < j; ++k)
+         {
+             this.dropItem(getDropItem(), 1);
+         }
 
-            for (int l = 0; l < k; ++l)
-            {
-                this.dropItem(j, 1);
-            }
-        }
-        int amountofmeat = this.rand.nextInt(3 + par2);
-        for (int l = 0; l < amountofmeat; ++l)
-        {
-            this.dropItem(TeleportationItems.rawEnderMeat.itemID, 1);
-        }
+         j = this.rand.nextInt(3) + 1 + this.rand.nextInt(1 + par2);
+
+         for (k = 0; k < j; ++k)
+         {
+             if (this.isBurning())
+             {
+                 this.dropItem(TeleportationItems.cookedEnderMeat, 1);
+             }
+             else
+             {
+                 this.dropItem(TeleportationItems.rawEnderMeat, 1);
+             }
+         }
     }
 
     /**
@@ -391,13 +421,4 @@ public class EntityTeleportationMob extends EntityMob
         }
     }
 
-    public boolean isScreaming()
-    {
-        return this.dataWatcher.getWatchableObjectByte(18) > 0;
-    }
-
-    public void setScreaming(boolean par1)
-    {
-        this.dataWatcher.updateObject(18, Byte.valueOf((byte)(par1 ? 1 : 0)));
-    }
 }

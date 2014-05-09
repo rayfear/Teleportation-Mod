@@ -4,22 +4,22 @@ import java.util.Random;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
-import tpmod.Item.TeleportationItems;
+import net.minecraft.item.Item;
+import tpmod.TeleportationMod;
+import tpmod.item.TeleportationItems;
 
 public class BlockTeleportingOre extends Block
 {
-    public BlockTeleportingOre(int par1, int par2)
+    public BlockTeleportingOre()
     {
-        super(par1, Material.rock);
+        super(Material.rock);
         this.setCreativeTab(CreativeTabs.tabBlock);
-    }
-
-    @Override
-    public void registerIcons(IconRegister iconRegister)
-    {
-        blockIcon = iconRegister.registerIcon("tpmod:Teleport_Ore");
+        this.setHarvestLevel("pickaxe", 2);
+        this.setBlockName("TeleportationOre");
+        this.setHardness(5F);
+        this.setBlockTextureName(TeleportationBlocks.modID("Teleportation Ore"));
+        this.setCreativeTab(TeleportationMod.teleportationTab);
     }
 
     /**
@@ -27,14 +27,16 @@ public class BlockTeleportingOre extends Block
      */
     public int quantityDropped(Random par1Random)
     {
-        return par1Random.nextInt(3);
+    	int min = 2;
+        return par1Random.nextInt(5 - min) + min;
     }
 
     /**
      * Returns the ID of the items to drop on destruction.
      */
-    public int idDropped(int par1, Random par2Random, int par3)
+    public Item getItemDropped(int par1, Random random, int par3)
     {
-        return TeleportationItems.TeleportationShards.itemID;
+        return TeleportationItems.teleportationShards;
     }
+    
 }

@@ -1,23 +1,25 @@
-package tpmod.Item;
+package tpmod.item;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.entity.EntityClientPlayerMP;
-import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.EnumRarity;
-import net.minecraft.item.EnumToolMaterial;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.World;
-import tpmod.positions.SavedLocation;
+import tpmod.TeleportationMod;
+import tpmod.location.SavedLocation;
 
 import com.google.common.collect.Multimap;
 
@@ -27,7 +29,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class ItemTpSword extends ItemSword
 {
     private float weaponDamage;
-    private final EnumToolMaterial toolMaterial;
+    private final ToolMaterial toolMaterial;
     int itemDamage;
 
     private SavedLocation location = null;
@@ -35,124 +37,136 @@ public class ItemTpSword extends ItemSword
     public static double y;
     public static double z;
 
-    public ItemTpSword(int par1, EnumToolMaterial par2EnumToolMaterial)
+    public ItemTpSword(ToolMaterial toolMaterial)
     {
-        super(par1, par2EnumToolMaterial);
-        this.toolMaterial = par2EnumToolMaterial;
+        super(toolMaterial);
+        this.toolMaterial = toolMaterial;
         this.maxStackSize = 1;
         this.setMaxDamage(200);
-        this.weaponDamage = 0F + par2EnumToolMaterial.getDamageVsEntity();
-        this.setUnlocalizedName("tpSword");
+        this.weaponDamage = 0.5F;
     }
-    public void onUpdate(ItemStack par1ItemStack, World par2World, Entity par3Entity, int par4, boolean par5)
-    {
-        if (location != null)
-        {
-            if (par1ItemStack.stackTagCompound == null)
-            {
-                par1ItemStack.setTagCompound(new NBTTagCompound());
-            }
-
-            if (!par1ItemStack.stackTagCompound.hasKey("ench"))
-            {
-                par1ItemStack.stackTagCompound.setTag("gegy", new NBTTagList("gegy"));
-            }
-
-            NBTTagList var3 = (NBTTagList)par1ItemStack.stackTagCompound.getTag("gegy");
-            NBTTagCompound var4 = new NBTTagCompound();
-            var4.setDouble("tpX", location._x);
-            var4.setDouble("tpY", location._y);
-            var4.setDouble("tpZ", location._z);
-            var3.appendTag(var4);
-        }
-    }
-
-    private void savetpPosition(ItemStack par1ItemStack,
-                                EntityPlayer par3EntityPlayer)
-    {
-        if (par1ItemStack.stackTagCompound == null)
-        {
-            par1ItemStack.setTagCompound(new NBTTagCompound());
-        }
-
-        if (!par1ItemStack.stackTagCompound.hasKey("tpPosition"))
-        {
-            par1ItemStack.stackTagCompound.setTag("tpPosition", new NBTTagList("tpPosition"));
-        }
-
-        NBTTagList tpPositionTagList = (NBTTagList)par1ItemStack.stackTagCompound.getTag("tpPosition");
-        NBTTagCompound tpPositionTag = new NBTTagCompound();
-        tpPositionTag.setDouble("x", par3EntityPlayer.posX);
-        tpPositionTag.setDouble("y", par3EntityPlayer.posY);
-        tpPositionTag.setDouble("z", par3EntityPlayer.posZ);
-        tpPositionTagList.appendTag(tpPositionTag);
-    }
-
-    private boolean hasSavedPosition(ItemStack par1ItemStack)
-    {
-        return par1ItemStack.stackTagCompound != null && par1ItemStack.stackTagCompound.hasKey("tpPosition");
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void registerIcons(IconRegister iconreg)
-    {
-        itemIcon = iconreg.registerIcon("tpmod:tpSword");
-    }
-
-    public static void readtpPosition(ItemStack par1ItemStack, Entity par3Entity)
-    {
-        NBTTagList tpPositionTagList = (NBTTagList)par1ItemStack.stackTagCompound.getTag("tpPosition");
-        NBTTagCompound tpPositionTag = (NBTTagCompound) tpPositionTagList.tagAt(0);
-        x = tpPositionTag.getDouble("x");
-        y = tpPositionTag.getDouble("y");
-        z = tpPositionTag.getDouble("z");
-    }
-
-    public float func_82803_g()
+    
+    /**
+     * getDamageVsEntity
+     */
+    public float func_150931_i()
     {
         return this.toolMaterial.getDamageVsEntity();
     }
 
     /**
-     * Returns the strength of the stack against a given block. 1.0F base, (Quality+1)*2 if correct blocktype, 1.5F if
-     * sword
+     * onBlockDestroyed
      */
-    public float getStrVsBlock(ItemStack par1ItemStack, Block par2Block)
+    public float func_150893_a(ItemStack stack, Block block)
     {
-        if (par2Block.blockID == Block.web.blockID)
+        if (block == Blocks.web)
         {
             return 15.0F;
         }
         else
         {
-            Material material = par2Block.blockMaterial;
-            return material != Material.plants && material != Material.vine && material != Material.coral && material != Material.leaves && material != Material.pumpkin ? 1.0F : 1.5F;
+            Material material = block.getMaterial();
+            return material != Material.plants && material != Material.vine && material != Material.coral && material != Material.leaves && material != Material.gourd ? 1.0F : 1.5F;
         }
+    }
+    
+    
+    public void onUpdate(ItemStack stack, World world, Entity entity, int par4, boolean par5)
+    {
+        if (location != null)
+        {
+            if (stack.stackTagCompound == null)
+            {
+                stack.setTagCompound(new NBTTagCompound());
+            }
+
+            if (!stack.stackTagCompound.hasKey("ench"))
+            {
+                stack.stackTagCompound.setTag("gegy", new NBTTagList());
+            }
+
+            NBTTagList var3 = (NBTTagList)stack.stackTagCompound.getTag("gegy");
+            NBTTagCompound nbt = new NBTTagCompound();
+            nbt.setDouble("x", location._x);
+            nbt.setDouble("y", location._y);
+            nbt.setDouble("z", location._z);
+            var3.appendTag(nbt);
+        }
+    }
+
+    private void saveTpPosition(ItemStack stack, EntityPlayer player)
+    {
+        if (stack.stackTagCompound == null)
+        {
+            stack.setTagCompound(new NBTTagCompound());
+        }
+
+        if (!stack.stackTagCompound.hasKey("tpPosition"))
+        {
+            stack.stackTagCompound.setTag("tpPosition", new NBTTagList());
+        }
+
+        NBTTagList tpPositionTagList = (NBTTagList)stack.stackTagCompound.getTag("tpPosition");
+        NBTTagCompound tpPositionTag = new NBTTagCompound();
+        tpPositionTag.setDouble("x", player.posX);
+        tpPositionTag.setDouble("y", player.posY);
+        tpPositionTag.setDouble("z", player.posZ);
+        tpPositionTagList.appendTag(tpPositionTag);
+    }
+
+    private boolean hasSavedPosition(ItemStack stack)
+    {
+        return stack.stackTagCompound != null && stack.stackTagCompound.hasKey("tpPosition");
+    }
+
+    public static void readTpPos(ItemStack stack, Entity entity)
+    {
+        NBTTagList tpPositionTagList = (NBTTagList)stack.stackTagCompound.getTag("tpPosition");
+        NBTTagCompound tpPositionTag = (NBTTagCompound) tpPositionTagList.getCompoundTagAt(0);
+        x = tpPositionTag.getDouble("x");
+        y = tpPositionTag.getDouble("y");
+        z = tpPositionTag.getDouble("z");
     }
 
     /**
      * Current implementations of this method in child classes do not use the entry argument beside ev. They just raise
      * the damage on the stack.
      */
-    public boolean hitEntity(ItemStack par1ItemStack, EntityLivingBase par2EntityLivingBase, EntityLivingBase par3EntityLivingBase)
+    public boolean hitEntity(ItemStack stack, EntityLivingBase entityHit, EntityLivingBase entityHitting)
     {
-        if (this.hasSavedPosition(par1ItemStack))
+        if (this.hasSavedPosition(stack))
         {
-            readtpPosition(par1ItemStack, par2EntityLivingBase);
-            par2EntityLivingBase.setPosition(x, y, z);
+            readTpPos(stack, entityHit);
+
+            entityHit.setPosition(x, y, z);
+            
+//            for (int i = 0; i < 30; i++) 
+//            {
+//    			double r = ((double)rand.nextFloat() - 0.5D) * 0.5D;
+//    			double g = ((double)rand.nextFloat() - 0.5D) * 0.5D;
+//    			double b = ((double)rand.nextFloat() - 0.5D) * 0.5D;
+//                
+//                double randX = entityHit.posX + (rand.nextDouble() - 0.5D) * (double)entityHit.width;
+//    			double randY = (entityHit.posY + rand.nextDouble() * (double)entityHit.height) - 0.25D;
+//    			double randZ = entityHit.posZ + (rand.nextDouble() - 0.5D) * (double)entityHit.width;
+//    			
+//    			if(entityHit.worldObj.isRemote)
+//    			{
+//    				entityHit.worldObj.spawnParticle("portal", randX, randY, randZ, r, g, b);
+//    			}
+//			}
         }
 
-        par1ItemStack.damageItem(1, par3EntityLivingBase);
+        stack.damageItem(1, entityHitting);
         return true;
     }
 
-    public boolean onBlockDestroyed(ItemStack par1ItemStack, World par2World, int par3, int par4, int par5, int par6, EntityLivingBase par7EntityLivingBase)
+    public boolean onBlockDestroyed(ItemStack stack, World world, Block block, int x, int y, int z, EntityLivingBase entityHitting)
     {
-        if ((double)Block.blocksList[par3].getBlockHardness(par2World, par4, par5, par6) != 0.0D)
+        if (block.getBlockHardness(world, x, y, z) != 0.0D)
         {
-            par1ItemStack.damageItem(2, par7EntityLivingBase);
-            this.itemDamage = par1ItemStack.getItemDamage();
+            stack.damageItem(2, entityHitting);
+            this.itemDamage = stack.getItemDamage();
         }
 
         return true;
@@ -171,7 +185,7 @@ public class ItemTpSword extends ItemSword
     /**
      * returns the action that specifies what animation to play when the items is being used
      */
-    public EnumAction getItemUseAction(ItemStack par1ItemStack)
+    public EnumAction getItemUseAction(ItemStack stack)
     {
         return EnumAction.block;
     }
@@ -179,7 +193,7 @@ public class ItemTpSword extends ItemSword
     /**
      * How long it takes to use or consume an item
      */
-    public int getMaxItemUseDuration(ItemStack par1ItemStack)
+    public int getMaxItemUseDuration(ItemStack stack)
     {
         return 72000;
     }
@@ -187,39 +201,34 @@ public class ItemTpSword extends ItemSword
     /**
      * Called whenever this item is equipped and the right mouse button is pressed. Args: itemStack, world, entityPlayer
      */
-    public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
+    public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player)
     {
-        if (par3EntityPlayer.isSneaking())
+        if (player.isSneaking())
         {
-            if (par3EntityPlayer.getClass() != EntityClientPlayerMP.class)
+            if (!world.isRemote)
             {
-                if (!this.hasSavedPosition(par1ItemStack))
-                {
-                    this.savetpPosition(par1ItemStack, par3EntityPlayer);
-                    par3EntityPlayer.addChatMessage("Succsesfully Set Co-ords");
-                }
-                else
-                {
-                    par1ItemStack.stackTagCompound.removeTag("tpPosition");
-                    this.savetpPosition(par1ItemStack, par3EntityPlayer);
-                    par3EntityPlayer.addChatMessage("Succsesfully Set Co-ords");
-                }
+            	if(player.getClass() != EntityClientPlayerMP.class)
+            	{
+            		if (!this.hasSavedPosition(stack))
+                    {
+                        this.saveTpPosition(stack, player);
+                        player.addChatMessage(new ChatComponentText("Successfully Set Co-ords"));
+                    }
+                    else
+                    {
+                        stack.stackTagCompound.removeTag("tpPosition");
+                        this.saveTpPosition(stack, player);
+                        player.addChatMessage(new ChatComponentText("Successfully Set Co-ords"));
+                    }	
+            	}
             }
         }
         else
         {
-            par3EntityPlayer.setItemInUse(par1ItemStack, this.getMaxItemUseDuration(par1ItemStack));
+            player.setItemInUse(stack, this.getMaxItemUseDuration(stack));
         }
 
-        return par1ItemStack;
-    }
-
-    /**
-     * Returns if the item (tool) can harvest results from the block type.
-     */
-    public boolean canHarvestBlock(Block par1Block)
-    {
-        return par1Block.blockID == Block.web.blockID;
+        return stack;
     }
 
     /**
@@ -239,29 +248,23 @@ public class ItemTpSword extends ItemSword
     }
 
     /**
-     * Return whether this item is repairable in an anvil.
-     */
-    public boolean getIsRepairable(ItemStack par1ItemStack, ItemStack par2ItemStack)
-    {
-        return this.toolMaterial.getToolCraftingMaterial() == par2ItemStack.itemID ? true : super.getIsRepairable(par1ItemStack, par2ItemStack);
-    }
-
-    /**
      * Gets a map of item attribute modifiers, used by ItemSword to increase hit damage.
      */
-    public Multimap getItemAttributeModifiers()
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+	public Multimap getItemAttributeModifiers()
     {
         Multimap multimap = super.getItemAttributeModifiers();
         multimap.put(SharedMonsterAttributes.attackDamage.getAttributeUnlocalizedName(), new AttributeModifier(field_111210_e, "Weapon modifier", (double)this.weaponDamage, 0));
         return multimap;
     }
-
-    public boolean hasEffect(ItemStack par1ItemStack)
+    
+    public EnumRarity getRarity(ItemStack stack)
     {
-        return true;
+        return stack.getItemDamage() == 0 ? EnumRarity.rare : EnumRarity.epic;
     }
-    public EnumRarity getRarity(ItemStack par1ItemStack)
+    @SideOnly(Side.CLIENT)
+    public void registerIcons(IIconRegister iconReg)
     {
-        return par1ItemStack.getItemDamage() == 0 ? EnumRarity.rare : EnumRarity.epic;
+        this.itemIcon = iconReg.registerIcon(TeleportationMod.MODID + ":" + "Teleportation Sword");
     }
 }

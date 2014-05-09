@@ -3,14 +3,13 @@ package tpmod.teleporter;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Random;
 
+import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.LongHashMap;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.ChunkCoordIntPair;
-import net.minecraft.world.PortalPosition;
 import net.minecraft.world.Teleporter;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
@@ -18,7 +17,6 @@ import tpmod.block.TeleportationBlocks;
 
 public class TeleporterTp extends Teleporter
 {
-	private final Random random;
 	/** Stores successful portal placement locations for rapid lookup. */
 	private final LongHashMap destinationCoordinateCache = new LongHashMap();
 
@@ -26,6 +24,7 @@ public class TeleporterTp extends Teleporter
 	 * A list of valid keys for the destinationCoordainteCache. These are based on the X & Z of the players initial
 	 * location.
 	 */
+	@SuppressWarnings("rawtypes")
 	private final List destinationCoordinateKeys = new ArrayList();
 	private final WorldServer worldServerInstance;
 
@@ -33,7 +32,6 @@ public class TeleporterTp extends Teleporter
 	{
 		super(par1WorldServer);
 		this.worldServerInstance = par1WorldServer;
-		this.random = new Random(par1WorldServer.getSeed());
 	}
 
 	@Override
@@ -65,7 +63,7 @@ public class TeleporterTp extends Teleporter
 						int var18 = var10 + var16;
 						int var19 = var11 + var15 * var13 - var14 * var12;
 						boolean var20 = var16 < 0;
-						this.worldServerInstance.setBlock(var17, var18, var19, var20 ? TeleportationBlocks.TpBlock.blockID : 0);
+						this.worldServerInstance.setBlock(var17, var18, var19, (Block) (var20 ? TeleportationBlocks.teleportationBlock : 0));
 					}
 				}
 			}
@@ -75,6 +73,7 @@ public class TeleporterTp extends Teleporter
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public boolean placeInExistingPortal(Entity par1Entity, double par2, double par4, double par6, float par8)
 	{
@@ -112,9 +111,9 @@ public class TeleporterTp extends Teleporter
 
 					for (int var26 = this.worldServerInstance.getActualHeight() - 1; var26 >= 0; --var26)
 					{
-						if (this.worldServerInstance.getBlockId(var48, var26, var23) == TeleportationBlocks.portal.blockID)
+						if (this.worldServerInstance.getBlock(var48, var26, var23) == TeleportationBlocks.teleportationPortal)
 						{
-							while (this.worldServerInstance.getBlockId(var48, var26 - 1, var23) == TeleportationBlocks.portal.blockID)
+							while (this.worldServerInstance.getBlock(var48, var26 - 1, var23) == TeleportationBlocks.teleportationPortal)
 							{
 								--var26;
 							}
@@ -139,7 +138,7 @@ public class TeleporterTp extends Teleporter
 		{
 			if (var19)
 			{
-				this.destinationCoordinateCache.add(var17, new PortalPosition(this, var12, var13, var14, this.worldServerInstance.getTotalWorldTime()));
+				this.destinationCoordinateCache.add(var17, new PortalPosition(var12, var13, var14, this.worldServerInstance.getTotalWorldTime()));
 				this.destinationCoordinateKeys.add(Long.valueOf(var17));
 			}
 
@@ -148,22 +147,22 @@ public class TeleporterTp extends Teleporter
 			var27 = (double) var14 + 0.5D;
 			int var50 = -1;
 
-			if (this.worldServerInstance.getBlockId(var12 - 1, var13, var14) == TeleportationBlocks.portal.blockID)
+			if (this.worldServerInstance.getBlock(var12 - 1, var13, var14) == TeleportationBlocks.teleportationPortal)
 			{
 				var50 = 2;
 			}
 
-			if (this.worldServerInstance.getBlockId(var12 + 1, var13, var14) == TeleportationBlocks.portal.blockID)
+			if (this.worldServerInstance.getBlock(var12 + 1, var13, var14) == TeleportationBlocks.teleportationPortal)
 			{
 				var50 = 0;
 			}
 
-			if (this.worldServerInstance.getBlockId(var12, var13, var14 - 1) == TeleportationBlocks.portal.blockID)
+			if (this.worldServerInstance.getBlock(var12, var13, var14 - 1) == TeleportationBlocks.teleportationPortal)
 			{
 				var50 = 3;
 			}
 
-			if (this.worldServerInstance.getBlockId(var12, var13, var14 + 1) == TeleportationBlocks.portal.blockID)
+			if (this.worldServerInstance.getBlock(var12, var13, var14 + 1) == TeleportationBlocks.teleportationPortal)
 			{
 				var50 = 1;
 			}
@@ -268,31 +267,31 @@ public class TeleporterTp extends Teleporter
 		int y = (int) entity.posY;
 		int z = (int) entity.posZ;
 
-		world.setBlock(x, y - 1, z, TeleportationBlocks.TpBlock.blockID);
-		world.setBlock(x, y + 3, z, TeleportationBlocks.TpBlock.blockID);
+		world.setBlock(x, y - 1, z, TeleportationBlocks.teleportationBlock);
+		world.setBlock(x, y + 3, z, TeleportationBlocks.teleportationBlock);
 		
-		world.setBlock(x + 1, y + 2, z, TeleportationBlocks.TpBlock.blockID);
-		world.setBlock(x + 2, y + 2, z, TeleportationBlocks.TpBlock.blockID);
-		world.setBlock(x + 2, y + 1, z, TeleportationBlocks.TpBlock.blockID);
-		world.setBlock(x + 2, y, z, TeleportationBlocks.TpBlock.blockID);
+		world.setBlock(x + 1, y + 2, z, TeleportationBlocks.teleportationBlock);
+		world.setBlock(x + 2, y + 2, z, TeleportationBlocks.teleportationBlock);
+		world.setBlock(x + 2, y + 1, z, TeleportationBlocks.teleportationBlock);
+		world.setBlock(x + 2, y, z, TeleportationBlocks.teleportationBlock);
 		
-		world.setBlock(x - 1, y + 2, z, TeleportationBlocks.TpBlock.blockID);
-		world.setBlock(x - 2, y + 2, z, TeleportationBlocks.TpBlock.blockID);
-		world.setBlock(x - 2, y + 1, z, TeleportationBlocks.TpBlock.blockID);
-		world.setBlock(x - 2, y, z, TeleportationBlocks.TpBlock.blockID);
+		world.setBlock(x - 1, y + 2, z, TeleportationBlocks.teleportationBlock);
+		world.setBlock(x - 2, y + 2, z, TeleportationBlocks.teleportationBlock);
+		world.setBlock(x - 2, y + 1, z, TeleportationBlocks.teleportationBlock);
+		world.setBlock(x - 2, y, z, TeleportationBlocks.teleportationBlock);
 		
-		world.setBlock(x, y + 2, z + 1, TeleportationBlocks.TpBlock.blockID);
-		world.setBlock(x, y + 2, z + 2, TeleportationBlocks.TpBlock.blockID);
-		world.setBlock(x, y + 1, z + 2, TeleportationBlocks.TpBlock.blockID);
-		world.setBlock(x, y, z + 2, TeleportationBlocks.TpBlock.blockID);
+		world.setBlock(x, y + 2, z + 1, TeleportationBlocks.teleportationBlock);
+		world.setBlock(x, y + 2, z + 2, TeleportationBlocks.teleportationBlock);
+		world.setBlock(x, y + 1, z + 2, TeleportationBlocks.teleportationBlock);
+		world.setBlock(x, y, z + 2, TeleportationBlocks.teleportationBlock);
 		
-		world.setBlock(x, y + 2, z - 1, TeleportationBlocks.TpBlock.blockID);
-		world.setBlock(x, y + 2, z - 2, TeleportationBlocks.TpBlock.blockID);
-		world.setBlock(x, y + 1, z - 2, TeleportationBlocks.TpBlock.blockID);
-		world.setBlock(x, y, z - 2, TeleportationBlocks.TpBlock.blockID);
+		world.setBlock(x, y + 2, z - 1, TeleportationBlocks.teleportationBlock);
+		world.setBlock(x, y + 2, z - 2, TeleportationBlocks.teleportationBlock);
+		world.setBlock(x, y + 1, z - 2, TeleportationBlocks.teleportationBlock);
+		world.setBlock(x, y, z - 2, TeleportationBlocks.teleportationBlock);
 		
-		world.setBlock(x, y, z, TeleportationBlocks.portal.blockID,0,2);
-		world.setBlock(x, y + 1, z, TeleportationBlocks.portal.blockID,0,2);
+		world.setBlock(x, y, z, TeleportationBlocks.teleportationPortal,0,2);
+		world.setBlock(x, y + 1, z, TeleportationBlocks.teleportationPortal,0,2);
 		
 		return true;
 	}
@@ -305,6 +304,7 @@ public class TeleporterTp extends Teleporter
 	{
 		if (par1 % 100L == 0L)
 		{
+			@SuppressWarnings("rawtypes")
 			Iterator iterator = this.destinationCoordinateKeys.iterator();
 			long j = par1 - 600L;
 

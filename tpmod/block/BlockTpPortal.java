@@ -4,7 +4,6 @@ import java.util.Random;
 
 import net.minecraft.block.BlockBreakable;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -13,7 +12,6 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import tpmod.teleporter.TeleporterTp;
 import tpmod.world.TeleportationDimensions;
-import cpw.mods.fml.common.toposort.TopologicalSort;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -21,16 +19,15 @@ public class BlockTpPortal extends BlockBreakable
 {
 	public boolean i;
 
-	public BlockTpPortal(int par1)
+	public BlockTpPortal()
 	{
-		super(par1, "tpmod:Tp_Portal", Material.portal, false);
+		super("tpmod:Tp_Portal", Material.portal, false);
 		this.setTickRandomly(true);
-	}
-
-	@Override
-	public void registerIcons(IconRegister iconRegister)
-	{
-		blockIcon = iconRegister.registerIcon("tpmod:Tp_Portal");
+		this.setBlockUnbreakable();
+		this.setBlockName("TeleportationPortal");
+		this.setBlockUnbreakable();
+		this.setLightLevel(2F);
+		this.setHardness(1F);
 	}
 
 	/**
@@ -81,11 +78,11 @@ public class BlockTpPortal extends BlockBreakable
 	 */
 	public boolean tryToCreatePortal(World world, int x, int y, int z)
 	{
-		boolean hasMiddleBeam = world.getBlockId(x, y - 1, z) == TeleportationBlocks.TpBlock.blockID && world.getBlockId(x, y + 3, z) == TeleportationBlocks.TpBlock.blockID;
-		boolean hasTopRightBeam = world.getBlockId(x + 1, y + 2, z) == TeleportationBlocks.TpBlock.blockID && world.getBlockId(x + 2, y + 2, z) == TeleportationBlocks.TpBlock.blockID && world.getBlockId(x + 2, y + 1, z) == TeleportationBlocks.TpBlock.blockID && world.getBlockId(x + 2, y, z) == TeleportationBlocks.TpBlock.blockID;
-		boolean haBottomRightBeam = world.getBlockId(x - 1, y + 2, z) == TeleportationBlocks.TpBlock.blockID && world.getBlockId(x - 2, y + 2, z) == TeleportationBlocks.TpBlock.blockID && world.getBlockId(x - 2, y + 1, z) == TeleportationBlocks.TpBlock.blockID && world.getBlockId(x - 2, y, z) == TeleportationBlocks.TpBlock.blockID;
-		boolean hasTopLeftBeam = world.getBlockId(x, y + 2, z + 1) == TeleportationBlocks.TpBlock.blockID && world.getBlockId(x, y + 2, z + 2) == TeleportationBlocks.TpBlock.blockID && world.getBlockId(x, y + 1, z + 2) == TeleportationBlocks.TpBlock.blockID && world.getBlockId(x, y, z + 2) == TeleportationBlocks.TpBlock.blockID;
-		boolean hasBottomLeftBeam = world.getBlockId(x, y + 2, z - 1) == TeleportationBlocks.TpBlock.blockID && world.getBlockId(x, y + 2, z - 2) == TeleportationBlocks.TpBlock.blockID && world.getBlockId(x, y + 1, z - 2) == TeleportationBlocks.TpBlock.blockID && world.getBlockId(x, y, z - 2) == TeleportationBlocks.TpBlock.blockID;
+		boolean hasMiddleBeam = world.getBlock(x, y - 1, z) == TeleportationBlocks.teleportationBlock && world.getBlock(x, y + 3, z) == TeleportationBlocks.teleportationBlock;
+		boolean hasTopRightBeam = world.getBlock(x + 1, y + 2, z) == TeleportationBlocks.teleportationBlock && world.getBlock(x + 2, y + 2, z) == TeleportationBlocks.teleportationBlock && world.getBlock(x + 2, y + 1, z) == TeleportationBlocks.teleportationBlock && world.getBlock(x + 2, y, z) == TeleportationBlocks.teleportationBlock;
+		boolean haBottomRightBeam = world.getBlock(x - 1, y + 2, z) == TeleportationBlocks.teleportationBlock && world.getBlock(x - 2, y + 2, z) == TeleportationBlocks.teleportationBlock && world.getBlock(x - 2, y + 1, z) == TeleportationBlocks.teleportationBlock && world.getBlock(x - 2, y, z) == TeleportationBlocks.teleportationBlock;
+		boolean hasTopLeftBeam = world.getBlock(x, y + 2, z + 1) == TeleportationBlocks.teleportationBlock && world.getBlock(x, y + 2, z + 2) == TeleportationBlocks.teleportationBlock && world.getBlock(x, y + 1, z + 2) == TeleportationBlocks.teleportationBlock && world.getBlock(x, y, z + 2) == TeleportationBlocks.teleportationBlock;
+		boolean hasBottomLeftBeam = world.getBlock(x, y + 2, z - 1) == TeleportationBlocks.teleportationBlock && world.getBlock(x, y + 2, z - 2) == TeleportationBlocks.teleportationBlock && world.getBlock(x, y + 1, z - 2) == TeleportationBlocks.teleportationBlock && world.getBlock(x, y, z - 2) == TeleportationBlocks.teleportationBlock;
 		boolean hasPortalFrame = hasMiddleBeam && hasTopRightBeam && haBottomRightBeam && hasTopLeftBeam && hasBottomLeftBeam;
 
 
@@ -93,8 +90,8 @@ public class BlockTpPortal extends BlockBreakable
 		{
 			world.setBlockToAir(x, y, z);
 			world.addWeatherEffect(new EntityLightningBolt(world, x, y, z));
-			world.setBlock(x, y, z, TeleportationBlocks.portal.blockID,0,2);
-			world.setBlock(x, y + 1, z, TeleportationBlocks.portal.blockID,0,2);     
+			world.setBlock(x, y, z, TeleportationBlocks.teleportationPortal,0,2);
+			world.setBlock(x, y + 1, z, TeleportationBlocks.teleportationPortal,0,2);     
 			return true;
 		}
 		else
@@ -154,7 +151,7 @@ public class BlockTpPortal extends BlockBreakable
 			d4 = ((double)par5Random.nextFloat() - 0.5D) * 0.5D;
 			d5 = ((double)par5Random.nextFloat() - 0.5D) * 0.5D;
 
-			if (par1World.getBlockId(par2 - 1, par3, par4) != this.blockID && par1World.getBlockId(par2 + 1, par3, par4) != this.blockID)
+			if (par1World.getBlock(par2 - 1, par3, par4) != this && par1World.getBlock(par2 + 1, par3, par4) != this)
 			{
 				d0 = (double)par2 + 0.5D + 0.25D * (double)i1;
 				d3 = (double)(par5Random.nextFloat() * 2.0F * (float)i1);

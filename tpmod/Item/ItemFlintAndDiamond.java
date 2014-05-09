@@ -1,82 +1,84 @@
-package tpmod.Item;
+package tpmod.item;
 
-import net.minecraft.client.renderer.texture.IconRegister;
-import net.minecraft.creativetab.CreativeTabs;
+import tpmod.TeleportationMod;
+import tpmod.block.TeleportationBlocks;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.block.Block;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
-import tpmod.block.TeleportationBlocks;
 
 public class ItemFlintAndDiamond extends Item
 {
-    public ItemFlintAndDiamond(int par1)
+    public ItemFlintAndDiamond()
     {
-        super(par1);
+        super();
         this.maxStackSize = 1;
         this.setMaxDamage(64);
-        this.setCreativeTab(CreativeTabs.tabTools);
-        this.setUnlocalizedName("Flint_And_Diamond");
-    }
-
-    @Override
-    public void registerIcons(IconRegister iconRegister)
-    {
-        itemIcon = iconRegister.registerIcon("tpmod:Flint_And_Diamond");
     }
 
     /**
      * Callback for item usage. If the item does something special on right clicking, he will have one of those. Return
      * True if something happen and false if it don't. This is for ITEMS, not BLOCKS
      */
-    public boolean onItemUse(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, World par3World, int par4, int par5, int par6, int par7, float par8, float par9, float par10)
+    public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int par7, float par8, float par9, float par10)
     {
         if (par7 == 0)
         {
-            --par5;
+            --y;
         }
 
         if (par7 == 1)
         {
-            ++par5;
+            ++y;
         }
 
         if (par7 == 2)
         {
-            --par6;
+            --z;
         }
 
         if (par7 == 3)
         {
-            ++par6;
+            ++z;
         }
 
         if (par7 == 4)
         {
-            --par4;
+            --x;
         }
 
         if (par7 == 5)
         {
-            ++par4;
+            ++x;
         }
 
-        if (!par2EntityPlayer.canPlayerEdit(par4, par5, par6, par7, par1ItemStack))
+        if (!player.canPlayerEdit(x, y, z, par7, stack))
         {
             return false;
         }
         else
         {
-            int var11 = par3World.getBlockId(par4, par5, par6);
+            Block block = world.getBlock(x, y, z);
 
-            if (var11 == 0)
+            if (block == Blocks.air)
             {
-                par3World.playSoundEffect((double)par4 + 0.5D, (double)par5 + 0.5D, (double)par6 + 0.5D, "fire.ignite", 1.0F, itemRand.nextFloat() * 0.4F + 0.8F);
-                par3World.setBlock(par4, par5, par6, TeleportationBlocks.FireBlock.blockID);
+                world.playSoundEffect((double)x + 0.5D, (double)y + 0.5D, (double)z + 0.5D, "fire.ignite", 1.0F, itemRand.nextFloat() * 0.4F + 0.8F);
+                world.setBlock(x, y, z, TeleportationBlocks.teleportationFire);
             }
 
-            par1ItemStack.damageItem(1, par2EntityPlayer);
+            stack.damageItem(1, player);
             return true;
         }
+    }
+    
+    @SideOnly(Side.CLIENT)
+    public void registerIcons(IIconRegister iconReg)
+    {
+        this.itemIcon = iconReg.registerIcon(TeleportationMod.MODID + ":" + "Flint And Diamond");
     }
 }
