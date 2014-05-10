@@ -9,8 +9,7 @@ import net.minecraft.util.EnumChatFormatting;
 
 import org.lwjgl.input.Keyboard;
 
-import tpmod.block.BlockTeleportationDoor;
-import tpmod.block.tileentity.TileEntityTeleportationDoor;
+import tpmod.doorlocator.TeleportationDoorLocator;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -105,33 +104,7 @@ public class GuiSetTeleportationDoorLocation extends GuiScreen
 			{
 				int intFrequency = Integer.parseInt(stringFrequency);
 
-				TileEntityTeleportationDoor tileEntityTop = null;
-				TileEntityTeleportationDoor tileEntityBottom = null;
-
-				if(player.worldObj.getBlock(x, y - 1, z) instanceof BlockTeleportationDoor)
-				{
-					if(player.worldObj.getBlock(x, y, z) instanceof BlockTeleportationDoor)
-					{
-						tileEntityTop = (TileEntityTeleportationDoor) player.worldObj.getTileEntity(x, y, z);
-					}
-
-					tileEntityBottom = (TileEntityTeleportationDoor) player.worldObj.getTileEntity(x, y - 1, z);
-				}
-				else if(player.worldObj.getBlock(x, y + 1, z) instanceof BlockTeleportationDoor)
-				{
-					tileEntityTop = (TileEntityTeleportationDoor) player.worldObj.getTileEntity(x, y + 1, z);
-					
-					if(player.worldObj.getBlock(x, y, z) instanceof BlockTeleportationDoor)
-					{
-						tileEntityBottom = (TileEntityTeleportationDoor) player.worldObj.getTileEntity(x, y, z);
-					}
-				}
-
-				if(tileEntityBottom != null && tileEntityTop != null)
-				{
-					tileEntityBottom.frequency = intFrequency;
-					tileEntityTop.frequency = intFrequency;
-				}
+				TeleportationDoorLocator.setFrequency(x, y, z, player.worldObj.provider.dimensionId, intFrequency);
 			}
 			catch (Exception e)
 			{

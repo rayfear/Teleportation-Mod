@@ -10,52 +10,52 @@ import tpmod.block.TeleportationBlocks;
 
 public class WorldGenTeleportTrees extends WorldGenAbstractTree
 {
-    private boolean field_150531_a;
+    private boolean allowTallTrees;
 
-    public WorldGenTeleportTrees(boolean p_i45449_1_, boolean p_i45449_2_)
+    public WorldGenTeleportTrees(boolean doBlockNotify, boolean allowTallTrees)
     {
-        super(p_i45449_1_);
-        this.field_150531_a = p_i45449_2_;
+        super(doBlockNotify);
+        this.allowTallTrees = allowTallTrees;
     }
 
-    public boolean generate(World par1World, Random par2Random, int par3, int par4, int par5)
+    public boolean generate(World world, Random rand, int x, int y, int z)
     {
-        int l = par2Random.nextInt(3) + 5;
+        int genHeight = rand.nextInt(3) + 5;
 
-        if (this.field_150531_a)
+        if (this.allowTallTrees)
         {
-            l += par2Random.nextInt(7);
+            genHeight += rand.nextInt(7);
         }
 
         boolean flag = true;
 
-        if (par4 >= 1 && par4 + l + 1 <= 256)
+        if (y >= 1 && y + genHeight + 1 <= 256)
         {
             int j1;
             int k1;
 
-            for (int i1 = par4; i1 <= par4 + 1 + l; ++i1)
+            for (int i1 = y; i1 <= y + 1 + genHeight; ++i1)
             {
                 byte b0 = 1;
 
-                if (i1 == par4)
+                if (i1 == y)
                 {
                     b0 = 0;
                 }
 
-                if (i1 >= par4 + 1 + l - 2)
+                if (i1 >= y + 1 + genHeight - 2)
                 {
                     b0 = 2;
                 }
 
-                for (j1 = par3 - b0; j1 <= par3 + b0 && flag; ++j1)
+                for (j1 = x - b0; j1 <= x + b0 && flag; ++j1)
                 {
-                    for (k1 = par5 - b0; k1 <= par5 + b0 && flag; ++k1)
+                    for (k1 = z - b0; k1 <= z + b0 && flag; ++k1)
                     {
                         if (i1 >= 0 && i1 < 256)
                         {
 
-                            if (!this.isReplaceable(par1World, j1, i1, k1))
+                            if (!this.isReplaceable(world, j1, i1, k1))
                             {
                                 flag = false;
                             }
@@ -74,46 +74,46 @@ public class WorldGenTeleportTrees extends WorldGenAbstractTree
             }
             else
             {
-                Block block2 = par1World.getBlock(par3, par4 - 1, par5);
+                Block block2 = world.getBlock(x, y - 1, z);
 
                 boolean isSoil = block2 == TeleportationBlocks.teleportationDirt || block2 == TeleportationBlocks.teleportationGrass;
-                if (isSoil && par4 < 256 - l - 1)
+                if (isSoil && y < 256 - genHeight - 1)
                 {
                     int k2;
 
-                    for (k2 = par4 - 3 + l; k2 <= par4 + l; ++k2)
+                    for (k2 = y - 3 + genHeight; k2 <= y + genHeight; ++k2)
                     {
-                        j1 = k2 - (par4 + l);
+                        j1 = k2 - (y + genHeight);
                         k1 = 1 - j1 / 2;
 
-                        for (int l2 = par3 - k1; l2 <= par3 + k1; ++l2)
+                        for (int l2 = x - k1; l2 <= x + k1; ++l2)
                         {
-                            int l1 = l2 - par3;
+                            int l1 = l2 - x;
 
-                            for (int i2 = par5 - k1; i2 <= par5 + k1; ++i2)
+                            for (int i2 = z - k1; i2 <= z + k1; ++i2)
                             {
-                                int j2 = i2 - par5;
+                                int j2 = i2 - z;
 
-                                if (Math.abs(l1) != k1 || Math.abs(j2) != k1 || par2Random.nextInt(2) != 0 && j1 != 0)
+                                if (Math.abs(l1) != k1 || Math.abs(j2) != k1 || rand.nextInt(2) != 0 && j1 != 0)
                                 {
-                                    Block block1 = par1World.getBlock(l2, k2, i2);
+                                    Block block1 = world.getBlock(l2, k2, i2);
 
-                                    if (block1.isAir(par1World, l2, k2, i2) || block1.isLeaves(par1World, l2, k2, i2))
+                                    if (block1.isAir(world, l2, k2, i2) || block1.isLeaves(world, l2, k2, i2))
                                     {
-                                        this.setBlockAndNotifyAdequately(par1World, l2, k2, i2, Blocks.obsidian, 2);
+                                        this.setBlockAndNotifyAdequately(world, l2, k2, i2, Blocks.obsidian, 2);
                                     }
                                 }
                             }
                         }
                     }
 
-                    for (k2 = 0; k2 < l; ++k2)
+                    for (k2 = 0; k2 < genHeight; ++k2)
                     {
-                        Block block3 = par1World.getBlock(par3, par4 + k2, par5);
+                        Block block3 = world.getBlock(x, y + k2, z);
 
-                        if (block3.isAir(par1World, par3, par4 + k2, par5) || block3.isLeaves(par1World, par3, par4 + k2, par5))
+                        if (block3.isAir(world, x, y + k2, z) || block3.isLeaves(world, x, y + k2, z))
                         {
-                            this.setBlockAndNotifyAdequately(par1World, par3, par4 + k2, par5, Blocks.cobblestone, 2);
+                            this.setBlockAndNotifyAdequately(world, x, y + k2, z, Blocks.cobblestone, 2);
                         }
                     }
 

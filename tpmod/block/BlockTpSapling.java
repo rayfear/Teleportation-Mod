@@ -59,14 +59,14 @@ public class BlockTpSapling extends BlockBush
     /**
      * Attempts to grow a sapling into a tree
      */
-    public void growTree(World par1World, int par2, int par3, int par4, Random par5Random)
+    public void growTree(World world, int x, int y, int z, Random rand)
     {
-        if (!TerrainGen.saplingGrowTree(par1World, par5Random, par2, par3, par4))
+        if (!TerrainGen.saplingGrowTree(world, rand, x, y, z))
         {
             return;
         }
 
-        int l = par1World.getBlockMetadata(par2, par3, par4) & 3;
+        int metadata = world.getBlockMetadata(x, y, z) & 3;
         Object object = null;
         int i1 = 0;
         int j1 = 0;
@@ -75,28 +75,28 @@ public class BlockTpSapling extends BlockBush
 
         if (flag)
         {
-            par1World.setBlock(par2 + i1, par3, par4 + j1, Blocks.air, 0, 4);
-            par1World.setBlock(par2 + i1 + 1, par3, par4 + j1, Blocks.air, 0, 4);
-            par1World.setBlock(par2 + i1, par3, par4 + j1 + 1, Blocks.air, 0, 4);
-            par1World.setBlock(par2 + i1 + 1, par3, par4 + j1 + 1, Blocks.air, 0, 4);
+            world.setBlock(x + i1, y, z + j1, Blocks.air, 0, 4);
+            world.setBlock(x + i1 + 1, y, z + j1, Blocks.air, 0, 4);
+            world.setBlock(x + i1, y, z + j1 + 1, Blocks.air, 0, 4);
+            world.setBlock(x + i1 + 1, y, z + j1 + 1, Blocks.air, 0, 4);
         }
         else
         {
-            par1World.setBlock(par2, par3, par4, Blocks.air, 0, 4);
+            world.setBlock(x, y, z, Blocks.air, 0, 4);
         }
 
-        if (!((WorldGenerator)object).generate(par1World, par5Random, par2 + i1, par3, par4 + j1))
+        if (!((WorldGenerator)object).generate(world, rand, x + i1, y, z + j1))
         {
             if (flag)
             {
-                par1World.setBlock(par2 + i1, par3, par4 + j1, this, l, 4);
-                par1World.setBlock(par2 + i1 + 1, par3, par4 + j1, this, l, 4);
-                par1World.setBlock(par2 + i1, par3, par4 + j1 + 1, this, l, 4);
-                par1World.setBlock(par2 + i1 + 1, par3, par4 + j1 + 1, this, l, 4);
+                world.setBlock(x + i1, y, z + j1, this, metadata, 4);
+                world.setBlock(x + i1 + 1, y, z + j1, this, metadata, 4);
+                world.setBlock(x + i1, y, z + j1 + 1, this, metadata, 4);
+                world.setBlock(x + i1 + 1, y, z + j1 + 1, this, metadata, 4);
             }
             else
             {
-                par1World.setBlock(par2, par3, par4, this, l, 4);
+                world.setBlock(x, y, z, this, metadata, 4);
             }
         }
     }

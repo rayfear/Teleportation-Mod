@@ -2,11 +2,14 @@ package tpmod.block;
 
 import java.util.Random;
 
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockAir;
 import net.minecraft.block.BlockBreakable;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.init.Blocks;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -25,9 +28,7 @@ public class BlockTpPortal extends BlockBreakable
 		this.setTickRandomly(true);
 		this.setBlockUnbreakable();
 		this.setBlockName("TeleportationPortal");
-		this.setBlockUnbreakable();
 		this.setLightLevel(2F);
-		this.setHardness(1F);
 	}
 
 	/**
@@ -89,7 +90,10 @@ public class BlockTpPortal extends BlockBreakable
 		if(hasPortalFrame)
 		{
 			world.setBlockToAir(x, y, z);
-			world.addWeatherEffect(new EntityLightningBolt(world, x, y, z));
+			if(!world.isRemote)
+			{
+				world.addWeatherEffect(new EntityLightningBolt(world, x, y, z));
+			}
 			world.setBlock(x, y, z, TeleportationBlocks.teleportationPortal,0,2);
 			world.setBlock(x, y + 1, z, TeleportationBlocks.teleportationPortal,0,2);     
 			return true;
@@ -104,9 +108,12 @@ public class BlockTpPortal extends BlockBreakable
 	 * Lets the block know when one of its neighbor changes. Doesn't know which neighbor changed (coordinates passed are
 	 * their own) Args: x, y, z, neighbor blockID
 	 */
-	public void onNeighborBlockChange(World par1World, int par2, int par3, int par4, int par5)
+	public void onNeighborBlockChange(World world, int x, int y, int z, Block block)
 	{
-
+		if(!(block instanceof BlockAir))
+		{
+            world.setBlock(x, y, z, Blocks.air);	
+		}
 	}
 
 	/**

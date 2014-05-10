@@ -16,4 +16,23 @@ public class Location
 		
 		this.dimension = dimension;
 	}
+	
+	@Override
+	public int hashCode()
+	{
+		return x + y * 25 + z * 52 + dimension * 25;
+	}
+	
+	@Override
+	public boolean equals(Object obj)
+	{
+		if(obj instanceof Location)
+		{
+			Location comparison = (Location) obj;
+			
+			return this.x == comparison.x && this.y == comparison.y && this.z == comparison.z && this.dimension == comparison.dimension;
+		}
+		
+		return false;
+	}
 }

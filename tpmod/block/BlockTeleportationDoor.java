@@ -3,7 +3,6 @@ package tpmod.block;
 import java.util.Random;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.IconFlipped;
@@ -12,7 +11,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
@@ -20,14 +18,14 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import tpmod.block.tileentity.TileEntityTeleportationDoor;
 import tpmod.doorlocator.TeleportationDoorLocator;
 import tpmod.gui.GuiSetTeleportationDoorLocation;
 import tpmod.item.TeleportationItems;
+import tpmod.location.Location;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class BlockTeleportationDoor extends BlockContainer
+public class BlockTeleportationDoor extends Block
 {
 	@SideOnly(Side.CLIENT)
 	private IIcon[] texturesUpper;
@@ -162,9 +160,7 @@ public class BlockTeleportationDoor extends BlockContainer
 
 			if (canUse && entity instanceof EntityLivingBase)
 			{
-				TeleportationDoorLocator.teleportEntityToDoor((EntityLivingBase)entity, ((TileEntityTeleportationDoor)world.getTileEntity(x, y, z)));
-
-				//this.onPoweredBlockChange(world, x, y, z, false);
+				TeleportationDoorLocator.teleportEntityToDoor((EntityLivingBase)entity, new Location(x, y, z, world.provider.dimensionId));
 			}
 		}
 		else if (world.getBlock(x, y + 1, z) instanceof BlockTeleportationDoor)
@@ -329,19 +325,6 @@ public class BlockTeleportationDoor extends BlockContainer
 	public void onBlockClicked(World world, int x, int y, int z, EntityPlayer player) {}
 
 	/**
-	 * Called throughout the code as a replacement for ITileEntityProvider.createNewTileEntity
-	 * Return the same thing you would from that function.
-	 * This will fall back to ITileEntityProvider.createNewTileEntity(World) if this block is a ITileEntityProvider
-	 *
-	 * @param metadata The Metadata of the current block
-	 * @return A instance of a class extending TileEntity
-	 */
-	public TileEntity createNewTileEntity(World world, int metadata)
-	{
-		return new TileEntityTeleportationDoor();
-	}
-
-	/**
 	 * Called upon block activation (right click on the block.)
 	 */
 	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int p_149727_6_, float p_149727_7_, float p_149727_8_, float p_149727_9_)
@@ -366,14 +349,8 @@ public class BlockTeleportationDoor extends BlockContainer
 			world.playAuxSFXAtEntity(player, 1003, x, y, z, 0);
 		}
 		else
-		{
-			TileEntityTeleportationDoor tileEntity = (TileEntityTeleportationDoor) world.getTileEntity(x, y, z);
-			
-			Minecraft.getMinecraft().displayGuiScreen(new GuiSetTeleportationDoorLocation(player, x, y, z, tileEntity.frequency));
-			
-			tileEntity = (TileEntityTeleportationDoor) world.getTileEntity(x, y, z);
-			
-			TeleportationDoorLocator.setFrequency(x, y, z, world.provider.dimensionId, tileEntity.frequency);
+		{	
+			Minecraft.getMinecraft().displayGuiScreen(new GuiSetTeleportationDoorLocation(player, x, y, z, TeleportationDoorLocator.getFrequency(world, x, y, z, world.provider.dimensionId)));	
 		}
 
 		return true;
@@ -541,9 +518,7 @@ public class BlockTeleportationDoor extends BlockContainer
 		{
 			world.setBlockToAir(x, y - 1, z);
 		}
-		
-		TileEntityTeleportationDoor tileEntityTeleportationDoor = (TileEntityTeleportationDoor) world.getTileEntity(x, y, z);
-		
-		TeleportationDoorLocator.setFrequency(x, y, z, world.provider.dimensionId, tileEntityTeleportationDoor.frequency);
+
+		TeleportationDoorLocator.setFrequency(x, y, z, world.provider.dimensionId, TeleportationDoorLocator.getFrequency(world, x, y, z, world.provider.dimensionId));
 	}
 }

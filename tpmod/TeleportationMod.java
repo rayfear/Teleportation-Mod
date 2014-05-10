@@ -3,7 +3,6 @@ package tpmod;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraftforge.common.config.Configuration;
 import tpmod.block.TeleportationBlocks;
-import tpmod.block.tileentity.TileEntityTeleportationDoor;
 import tpmod.command.CommandJump;
 import tpmod.config.TeleportationConfig;
 import tpmod.crafting.TeleportationCrafting;
@@ -58,8 +57,6 @@ public class TeleportationMod
         TeleportationBiomes.registerBiomes();
         TeleportationDimensions.registerDimensions();
         TpModEvents.register();
-        
-        GameRegistry.registerTileEntity(TileEntityTeleportationDoor.class, MODID + ":teleportation_door");
         
         NetworkRegistry.INSTANCE.registerGuiHandler(INSTANCE, new TeleportationModGUIHandler());
         
