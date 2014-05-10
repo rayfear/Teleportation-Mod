@@ -15,7 +15,6 @@ import cpw.mods.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class RenderTpArrow extends Render
 {
-    private static final ResourceLocation field_110780_a = new ResourceLocation("tpmod:textures/items/tpArrow.png");
     public void renderTpArrow(EntityTpArrow par1EntityTpArrow, double par2, double par4, double par6, float par8, float par9)
     {
         GL11.glPushMatrix();

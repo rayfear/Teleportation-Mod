@@ -1,52 +1,50 @@
-package tpmod.Item;
+package tpmod.item;
 
-import net.minecraft.item.EnumToolMaterial;
 import net.minecraft.item.Item;
+import net.minecraft.item.Item.ToolMaterial;
 import net.minecraft.item.ItemFood;
-import tpmod.TeleporterMod;
-import tpmod.config.TeleportationConfig;
-import cpw.mods.fml.common.registry.LanguageRegistry;
+import tpmod.TeleportationMod;
+import cpw.mods.fml.common.registry.GameRegistry;
 
 public class TeleportationItems
 {
-    public final static Item Teleporter = new ItemPortalTeleportationWand(TeleportationConfig.TeleporterID);
-    public final static Item LookingWand = new ItemJumpWand(TeleportationConfig.LookingWandID);
-    public final static Item ObsidianSticks = new ItemObsidianStick(TeleportationConfig.ObsidianSticksID);
-    public final static Item TeleportationShards = new ItemTeleportationShards(TeleportationConfig.TeleportationShardsID);
-    public final static Item TeleporterRemember = new ItemWarpWand(TeleportationConfig.TeleporterRememberID);
-    public final static Item TeleportationBall = new ItemTeleportationBall(TeleportationConfig.TeleportationBallID);
-    public final static Item MiniPortal = new ItemMiniPortal(TeleportationConfig.MiniPortalID);
-    public final static Item FlintAndDiamond = new ItemFlintAndDiamond(TeleportationConfig.FlintAndDiamondID);
-    public final static Item LookingEye = new ItemLookingEye(TeleportationConfig.LookingEyeID);
+	public final static Item warpWand = new ItemWarpWand().setCreativeTab(TeleportationMod.teleportationTab).setUnlocalizedName("WarpWand");
+	public final static Item portalTeleportationWand = new ItemPortalTeleportationWand().setCreativeTab(TeleportationMod.teleportationTab).setUnlocalizedName("PortalWand");
+	public final static Item jumpWand = new ItemJumpWand().setCreativeTab(TeleportationMod.teleportationTab).setUnlocalizedName("JumpWand");
+	public final static Item obsidianSticks = new ItemObsidianStick().setCreativeTab(TeleportationMod.teleportationTab).setUnlocalizedName("ObsidianSticks");
+	public final static Item teleportationShards = new ItemTeleportationShards().setCreativeTab(TeleportationMod.teleportationTab).setUnlocalizedName("TeleportationShards");
+	public final static Item teleportationOrb = new ItemTeleportationOrb().setCreativeTab(TeleportationMod.teleportationTab).setUnlocalizedName("TeleportationOrb");
+	public final static Item portalWandTop = new ItemPortalWandTop().setCreativeTab(TeleportationMod.teleportationTab).setUnlocalizedName("PortalWandTop");
+	public final static Item flintAndDiamond = new ItemFlintAndDiamond().setCreativeTab(TeleportationMod.teleportationTab).setUnlocalizedName("FlintAndDiamond");
+	public final static Item watchingEye = new ItemWatchingEye().setCreativeTab(TeleportationMod.teleportationTab).setUnlocalizedName("WatchingEye");
+	public static final Item tpSword = new ItemTpSword(ToolMaterial.WOOD).setCreativeTab(TeleportationMod.teleportationTab).setUnlocalizedName("TeleportationSword");
+	public final static Item tpBow = new ItemTeleportationBow().setCreativeTab(TeleportationMod.teleportationTab).setUnlocalizedName("TeleportationBow");
+	public final static Item tpArrow = new ItemTeleportationArrow().setCreativeTab(TeleportationMod.teleportationTab).setUnlocalizedName("TeleportationArrow");
+	public static final Item playerTeleporter = new ItemPlayerTeleporter();
+	
+	public static final ItemFood rawEnderMeat = (ItemFood) new ItemFood(4, true).setPotionEffect(9, 15, 6, 100).setUnlocalizedName("RawEnderMeat").setTextureName("tpmod:rawEnderMeat");
+	public static final ItemFood cookedEnderMeat = (ItemFood) new ItemFood(6, true).setPotionEffect(1, 60, 1, 60).setUnlocalizedName("CookedEnderMeat").setTextureName("tpmod:cookedEnderMeat");
 
-    public final static Item tpArrow = new ItemTeleportationArrow(TeleportationConfig.tpArrowID).setCreativeTab(TeleporterMod.TpTab);
-    public final static Item tpBow = new ItemTeleportationBow(TeleportationConfig.tpBowID).setCreativeTab(TeleporterMod.TpTab);
-
-    public static final Item tpSword = new ItemTpSword(TeleportationConfig.TpSwordID, EnumToolMaterial.WOOD).setCreativeTab(TeleporterMod.TpTab);
-
-    public static final ItemFood rawEnderMeat = (ItemFood) new ItemFood(TeleportationConfig.enderMeatID, 4, true).setPotionEffect(9, 15, 6, 100).setUnlocalizedName("rawEnderMeat").setTextureName("tpmod:rawEnderMeat");
-    public static final ItemFood cookedEnderMeat = (ItemFood) new ItemFood(TeleportationConfig.enderMeatID + 1, 6, true).setPotionEffect(1, 60, 1, 60).setUnlocalizedName("cookedEnderMeat").setTextureName("tpmod:cookedEnderMeat");
-    
-    public static void registerItems()
-    {
-        LanguageRegistry.addName(LookingWand, "Jump Wand");
-        LanguageRegistry.addName(ObsidianSticks, "Obsidian Sticks");
-        LanguageRegistry.addName(TeleportationShards, "Teleportation Shards");
-        LanguageRegistry.addName(FlintAndDiamond, "Flint and Diamond");
-        LanguageRegistry.addName(Teleporter, "Portal Teleportation Wand");
-        LanguageRegistry.addName(TeleporterRemember, "Warp Wand");
-        LanguageRegistry.addName(TeleportationBall, "Teleportation Orb");
-        LanguageRegistry.addName(MiniPortal, "Portal Wand Top");
-        LanguageRegistry.addName(LookingEye, "Watching Eye");
-        LanguageRegistry.addName(tpArrow, "Teleportation Arrow");
-        LanguageRegistry.addName(tpBow, "Teleportation Bow");
-        LanguageRegistry.addName(tpSword, "Teleportation Sword");
-        LanguageRegistry.addName(rawEnderMeat, "Raw Ender Meat");
-        LanguageRegistry.addName(cookedEnderMeat, "Cooked Ender Meat");
-        TeleportationShards.setCreativeTab(TeleporterMod.TpTab);
-        ObsidianSticks.setCreativeTab(TeleporterMod.TpTab);
-        FlintAndDiamond.setCreativeTab(TeleporterMod.TpTab);
-        Teleporter.setCreativeTab(TeleporterMod.TpTab);
-        TeleporterRemember.setCreativeTab(TeleporterMod.TpTab);
-    }
+	public static final Item teleportationDoor = new ItemTeleportationDoor().setUnlocalizedName("TeleportationDoor");
+	
+	public static void registerItems()
+	{
+		GameRegistry.registerItem(warpWand, "warp_wand");
+		GameRegistry.registerItem(portalTeleportationWand, "portal_wand");
+		GameRegistry.registerItem(jumpWand, "jump_wand");
+		GameRegistry.registerItem(obsidianSticks, "obsidian_sticks");
+		GameRegistry.registerItem(teleportationShards, "teleportation_shards");
+		GameRegistry.registerItem(teleportationOrb, "teleportation_orb");
+		GameRegistry.registerItem(portalWandTop, "portal_wand_top");
+		GameRegistry.registerItem(flintAndDiamond, "flint_and_diamond");
+		GameRegistry.registerItem(watchingEye, "watching_eye");
+		GameRegistry.registerItem(tpSword, "teleportation_sword");
+		GameRegistry.registerItem(tpBow, "teleportation_bow");
+		GameRegistry.registerItem(tpArrow, "teleportation_arrow");
+		GameRegistry.registerItem(rawEnderMeat, "raw_ender_meat");
+		GameRegistry.registerItem(cookedEnderMeat, "cooked_ender_meat");
+		//GameRegistry.registerItem(playerTeleporter, "player_teleporter");
+		
+		//GameRegistry.registerItem(teleportationDoor, "teleportation_door_item");
+	}
 }

@@ -1,18 +1,18 @@
 package tpmod.event;
 
-import net.minecraftforge.event.ForgeSubscribe;
 import net.minecraftforge.event.entity.player.BonemealEvent;
 import tpmod.block.BlockTpSapling;
 import tpmod.block.TeleportationBlocks;
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
 public class EventBonemeel
 {
-    @ForgeSubscribe
+    @SubscribeEvent
     public void onEvent(BonemealEvent e)
     {
-        if (e.ID == TeleportationBlocks.tpSapling.blockID)
+        if (e.block == TeleportationBlocks.teleportationSapling)
         {
-            ((BlockTpSapling)TeleportationBlocks.tpSapling).markOrGrowMarked(e.world, e.X, e.Y, e.Z, e.world.rand);
+            ((BlockTpSapling)TeleportationBlocks.teleportationSapling).markOrGrowMarked(e.world, e.x, e.y, e.z, e.world.rand);
         }
     }
 }

@@ -1,30 +1,23 @@
-package tpmod.Item;
+package tpmod.item;
 
-import net.minecraft.client.renderer.texture.IconRegister;
-import net.minecraft.creativetab.CreativeTabs;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+import tpmod.TeleportationMod;
 import tpmod.teleporter.TeleporterClient;
 
 public class ItemPortalTeleportationWand extends Item
 {
-    public ItemPortalTeleportationWand(int id)
+    public ItemPortalTeleportationWand()
     {
-        super(id);
-        this.setUnlocalizedName("Portal_Wand");
-        this.setCreativeTab(CreativeTabs.tabMisc);
+        super();
         this.maxStackSize = 1;
         this.setMaxDamage(100);
-        this.isFull3D();
-    }
-
-    @Override
-    public void registerIcons(IconRegister iconRegister)
-    {
-        itemIcon = iconRegister.registerIcon("tpmod:Portal_Wand");
     }
 
     public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par2EntityPlayer)
@@ -42,5 +35,11 @@ public class ItemPortalTeleportationWand extends Item
     public EnumRarity getRarity(ItemStack par1ItemStack)
     {
         return par1ItemStack.getItemDamage() == 0 ? EnumRarity.rare : EnumRarity.epic;
+    }
+    
+    @SideOnly(Side.CLIENT)
+    public void registerIcons(IIconRegister iconReg)
+    {
+        this.itemIcon = iconReg.registerIcon(TeleportationMod.MODID + ":" + "Portal Wand");
     }
 }

@@ -1,8 +1,8 @@
 package tpmod.tab;
 
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.ItemStack;
-import tpmod.Item.TeleportationItems;
+import net.minecraft.item.Item;
+import tpmod.item.TeleportationItems;
 
 public class TabTeleportation extends CreativeTabs
 {
@@ -10,9 +10,10 @@ public class TabTeleportation extends CreativeTabs
     {
         super(label);
     }
-    @Override
-    public ItemStack getIconItemStack()
-    {
-        return new ItemStack(TeleportationItems.LookingEye);
-    }
+    
+	@Override
+	public Item getTabIconItem()
+	{
+		 return TeleportationItems.watchingEye;
+	}
 }

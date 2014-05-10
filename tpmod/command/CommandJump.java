@@ -1,7 +1,6 @@
 package tpmod.command;
 
 import tpmod.helper.TeleportationHelper;
-
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -32,4 +31,10 @@ public class CommandJump extends CommandBase
         TeleportationHelper tpHelper = new TeleportationHelper();
         tpHelper.jump(player.worldObj, player);
     }
+
+	@Override
+	public int compareTo(Object arg0)
+	{
+		return 0;
+	}
 }

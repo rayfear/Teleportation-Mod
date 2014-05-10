@@ -2,37 +2,33 @@ package tpmod.proxies;
 
 import net.minecraftforge.client.IItemRenderer;
 import net.minecraftforge.client.MinecraftForgeClient;
-import tpmod.Item.TeleportationItems;
-import tpmod.block.TeleportationBlocks;
 import tpmod.config.TeleportationConfig;
-import tpmod.crafting.TeleportationCrafting;
-import tpmod.entity.TeleportationEntities;
-import tpmod.event.TpModEvents;
+import tpmod.entity.EntityObserver;
+import tpmod.entity.EntityWatcher;
+import tpmod.entity.RenderObserver;
+import tpmod.entity.RenderTpMob;
+import tpmod.item.TeleportationItems;
 import tpmod.itemRenderers.RenderWand;
 import tpmod.itemRenderers.RenderWand2;
 import tpmod.itemRenderers.RenderWand3;
-import tpmod.world.TeleportationBiomes;
-import tpmod.world.TeleportationDimensions;
+import tpmod.model.ModelObserver;
+import tpmod.model.ModelTeleportationMob;
+import cpw.mods.fml.client.registry.RenderingRegistry;
 
 public class ClientProxyTp extends CommonProxyTp
 {
-    @Override
+    @SuppressWarnings({ "deprecation", "static-access" })
+	@Override
     public void register()
     {
         //Render
         if (TeleportationConfig.enable3D.getBoolean(true))
         {
-            MinecraftForgeClient.registerItemRenderer(TeleportationItems.TeleporterRemember.itemID, (IItemRenderer)new RenderWand());
-            MinecraftForgeClient.registerItemRenderer(TeleportationItems.Teleporter.itemID, (IItemRenderer)new RenderWand2());
-            MinecraftForgeClient.registerItemRenderer(TeleportationItems.LookingWand.itemID, (IItemRenderer)new RenderWand3());
+			MinecraftForgeClient.registerItemRenderer(TeleportationItems.warpWand, (IItemRenderer)new RenderWand());
+            MinecraftForgeClient.registerItemRenderer(TeleportationItems.portalTeleportationWand, (IItemRenderer)new RenderWand2());
+            MinecraftForgeClient.registerItemRenderer(TeleportationItems.jumpWand, (IItemRenderer)new RenderWand3());
         }
-
-        TeleportationBlocks.registerBlocks();
-        TeleportationItems.registerItems();
-        TeleportationCrafting.registerCrafting();
-        TeleportationEntities.registerEntities();
-        TeleportationBiomes.registerBiomes();
-        TeleportationDimensions.registerDimensions();
-        TpModEvents.register();
+        RenderingRegistry.instance().registerEntityRenderingHandler(EntityWatcher.class, new RenderTpMob(new ModelTeleportationMob(), 0.3F));
+        RenderingRegistry.instance().registerEntityRenderingHandler(EntityObserver.class, new RenderObserver(new ModelObserver(), 0.3F));
     }
 }

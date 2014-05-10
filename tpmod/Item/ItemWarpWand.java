@@ -1,7 +1,6 @@
-package tpmod.Item;
+package tpmod.item;
 
-import net.minecraft.client.renderer.texture.IconRegister;
-import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
@@ -10,30 +9,21 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.world.World;
-import tpmod.positions.SavedLocation;
+import tpmod.TeleportationMod;
+import tpmod.location.SavedLocation;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class ItemWarpWand extends Item
 {
-    public ItemWarpWand(int index)
+    public ItemWarpWand()
     {
-        super(index);
-        this.setUnlocalizedName("Teleportation_Wand");
-        this._index = index;
-        this.setCreativeTab(CreativeTabs.tabMisc);
+        super();
         this.maxStackSize = 1;
-        this.setMaxDamage(101);
-        this.isFull3D();
+        this.setMaxDamage(100);
     }
 
-    private int _index;
-    private Boolean _initialised;
     private SavedLocation location = null;
-
-    @Override
-    public void registerIcons(IconRegister iconRegister)
-    {
-        itemIcon = iconRegister.registerIcon("tpmod:Teleportation_Wand");
-    }
 
     /**
      * Called whenever this item is equipped and the right mouse button is pressed. Args: itemStack, world, entityPlayer
@@ -75,8 +65,7 @@ public class ItemWarpWand extends Item
         return par1ItemStack.stackTagCompound != null && par1ItemStack.stackTagCompound.hasKey("position");
     }
 
-    private void savePosition(ItemStack par1ItemStack,
-                              EntityPlayer par3EntityPlayer)
+    private void savePosition(ItemStack par1ItemStack, EntityPlayer par3EntityPlayer)
     {
         if (par1ItemStack.stackTagCompound == null)
         {
@@ -85,7 +74,7 @@ public class ItemWarpWand extends Item
 
         if (!par1ItemStack.stackTagCompound.hasKey("position"))
         {
-            par1ItemStack.stackTagCompound.setTag("position", new NBTTagList("position"));
+            par1ItemStack.stackTagCompound.setTag("position", new NBTTagList());
         }
 
         NBTTagList positionTagList = (NBTTagList)par1ItemStack.stackTagCompound.getTag("position");
@@ -96,45 +85,52 @@ public class ItemWarpWand extends Item
         positionTagList.appendTag(positionTag);
     }
 
-    private void readPosition(ItemStack par1ItemStack,
-                              EntityPlayer par3EntityPlayer)
+    private void readPosition(ItemStack par1ItemStack, EntityPlayer par3EntityPlayer)
     {
         NBTTagList positionTagList = (NBTTagList)par1ItemStack.stackTagCompound.getTag("position");
-        NBTTagCompound positionTag = (NBTTagCompound) positionTagList.tagAt(0);
+        NBTTagCompound positionTag = (NBTTagCompound) positionTagList.getCompoundTagAt(0);
         double x = positionTag.getDouble("x");
         double y = positionTag.getDouble("y");
         double z = positionTag.getDouble("z");
         par3EntityPlayer.setPosition(x, y, z);
     }
 
-    public void onUpdate(ItemStack par1ItemStack, World par2World, Entity par3Entity, int par4, boolean par5)
+    public void onUpdate(ItemStack stack, World world, Entity entity, int par4, boolean par5)
     {
         if (location != null)
         {
-            if (par1ItemStack.stackTagCompound == null)
+            if (stack.stackTagCompound == null)
             {
-                par1ItemStack.setTagCompound(new NBTTagCompound());
+                stack.setTagCompound(new NBTTagCompound());
             }
 
-            if (!par1ItemStack.stackTagCompound.hasKey("ench"))
+            if (!stack.stackTagCompound.hasKey("ench"))
             {
-                par1ItemStack.stackTagCompound.setTag("gegy", new NBTTagList("gegy"));
+                stack.stackTagCompound.setTag("gegy", new NBTTagList());
             }
 
-            NBTTagList var3 = (NBTTagList)par1ItemStack.stackTagCompound.getTag("gegy");
-            NBTTagCompound var4 = new NBTTagCompound();
-            var4.setDouble("x", location._x);
-            var4.setDouble("y", location._y);
-            var4.setDouble("z", location._z);
-            var3.appendTag(var4);
+            NBTTagList gegy1000Tags = (NBTTagList)stack.stackTagCompound.getTag("gegy");
+            NBTTagCompound position = new NBTTagCompound();
+            position.setDouble("x", location._x);
+            position.setDouble("y", location._y);
+            position.setDouble("z", location._z);
+            gegy1000Tags.appendTag(position);
         }
     }
+    
     public boolean hasEffect(ItemStack par1ItemStack)
     {
         return true;
     }
+    
     public EnumRarity getRarity(ItemStack par1ItemStack)
     {
         return par1ItemStack.getItemDamage() == 0 ? EnumRarity.rare : EnumRarity.epic;
+    }
+    
+    @SideOnly(Side.CLIENT)
+    public void registerIcons(IIconRegister iconReg)
+    {
+        this.itemIcon = iconReg.registerIcon(TeleportationMod.MODID + ":" + "Warp Wand");
     }
 }
